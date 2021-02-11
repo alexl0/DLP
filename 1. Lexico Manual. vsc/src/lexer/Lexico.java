@@ -13,6 +13,7 @@ public class Lexico {
     // public static final int POR = '*';  // '*' -> 42
     public static final int INT_CONSTANT = 256;
     public static final int IDENT = 257;
+    public static final int FLOAT_CONSTANT = 258;
 
     private Reader input;
     private int currentChar;
@@ -50,11 +51,23 @@ public class Lexico {
             if (Character.isDigit(getChar())) {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append((char) getChar());
-                while (Character.isDigit(readNext()))
-                    buffer.append((char) getChar());
-                return new Token(INT_CONSTANT, buffer.toString());
+                
+                boolean seHaUsadoPunto=false;
+                
+                while (Character.isDigit(readNext()) || (getChar()=='.')&&!seHaUsadoPunto) {
+                	if(getChar()=='.') {
+                		seHaUsadoPunto=true;
+                		buffer.append((char) getChar());
+                	}
+                	else
+                		buffer.append((char) getChar());
+                }
+                if(!seHaUsadoPunto)
+                	return new Token(INT_CONSTANT, buffer.toString());
+                else
+                	return new Token(FLOAT_CONSTANT, buffer.toString());
             }
-
+            
             if (Character.isLetter(getChar())) {
                 StringBuffer buffer = new StringBuffer();
                 buffer.append((char) getChar());

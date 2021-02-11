@@ -9,7 +9,7 @@ public class Main {
         try {
 
             Lexico lex = new Lexico(new FileReader("source.txt"));
-            // Lexico lex = new Lexico(new FileReader("test.txt"));
+            //Lexico lex = new Lexico(new FileReader("test.txt"));
 
             Token token;
             while ((token = lex.nextToken()).getType() != 0)
