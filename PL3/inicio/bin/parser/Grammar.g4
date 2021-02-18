@@ -2,6 +2,6 @@ grammar Grammar;
 
 import Lexicon;
 
-start : print EOF;
+start : 'DATA' print EOF;
 
 print : 'print' LITENT ';';
