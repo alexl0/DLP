@@ -1,18 +1,31 @@
 lexer grammar Lexicon
 	;
 
-INT_CONSTANT
-	: [0-9]+
-	;
+DATA:	'DATA';
+CODE:	'CODE';
 
-LINE_COMMENT
-	: '//' .*? ('\n' | EOF) -> skip
-	;
+PRINT: 'print';
 
-MULTILINE_COMMENT
-	: '/*' .*? '*/' -> skip
-	;
+INT:	'int';
+FLOAT:	'float';
 
-WHITESPACE
-	: [ \t\r\n]+ -> skip
-	;
+LITENT:	[0-9]+;
+LITREAL:	[0-9]+ '.' [0-9]+;
+IDENT:			[a-zA-Z][a-zA-Z0-9_]*;
+
+PLUS:	'+';
+MULT:	'*';
+SUB:	'-';
+DIV:	'/';
+
+SEMICOLON: ';';
+
+ASSIGN: '=';
+
+OPEN_PAREN:		'(';
+CLOSE_PAREN:	')';
+
+LINE_COMMENT:		'//' .*? ('\n'|EOF)	-> skip;
+MULTILINE_COMMENT:	'/*' .*? '*/'	-> skip;
+
+WHITESPACE: [ \t\r\n]+ -> skip;

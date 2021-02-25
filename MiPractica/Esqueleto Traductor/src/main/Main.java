@@ -56,7 +56,7 @@ public class Main {
         // ast = parser.start().ast;
 
         if (parser.getNumberOfSyntaxErrors() > 0 || ast == null) { // Hay errores o el AST no se ha implementado aún
-            errorManager.notify("El AST no ha sido creado.");
+        	errorManager.notify("El AST no ha sido creado.");
             return null;
         }
 
