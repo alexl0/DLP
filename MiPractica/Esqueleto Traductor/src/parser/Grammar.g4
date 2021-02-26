@@ -6,8 +6,6 @@ import Lexicon
 start: definicion+;
 
 definicion: defVar
-	| defFunc
-	| defStruct
 	;
 
 defVar: 'var' IDENT ':' tipo ';'
@@ -18,11 +16,4 @@ tipo: 'int'
 	| 'char'
 	| '[' LITENT ']' tipo
 	| IDENT
-	;
-
-defFunc: 'F'
-	;
-
-
-defStruct: 'S'
 	;

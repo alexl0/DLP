@@ -1,2 +1,8 @@
 var a:int;
 var b:char;
+var c:[5] float;
+var h:[3][3] float;
+struct Direccion {
+	portal:int;
+	codigoPostal:int;
+};
