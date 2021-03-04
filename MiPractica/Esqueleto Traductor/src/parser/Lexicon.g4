@@ -25,7 +25,7 @@ ASSIGN: '=';
 OPEN_PAREN:		'(';
 CLOSE_PAREN:	')';
 
-LINE_COMMENT:		'//' ~'\n'	-> skip;
+LINE_COMMENT:		'//' (~'\n')*	-> skip;
 MULTILINE_COMMENT:	'/*' .*? '*/'	-> skip;
 
 WHITESPACE: [ \t\r\n]+ -> skip;
