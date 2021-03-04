@@ -1,3 +1,5 @@
+//FALTA EL EOF
+
 grammar Grammar
 	;
 import Lexicon
