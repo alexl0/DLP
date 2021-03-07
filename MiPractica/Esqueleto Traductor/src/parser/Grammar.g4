@@ -1,87 +1,70 @@
-grammar Grammar
-	;
-import Lexicon
-	;
+grammar Grammar;
+import Lexicon;
 
 start: definiciones EOF;
 
 definiciones: definicion+;
 
-definicion: defVar
-	| defStruct
-	| defFunc
-	;
+definicion: defVar | defStruct | defFunc;
 
-sentencias: sentencia* ;
+sentencias: sentencia*;
 
-sentencia: 'read' expr ';'
+sentencia:
+	'read' expr ';'
 	| 'print' expr ';'
 	| 'printsp' expr ';'
 	| 'println' expr ';'
 	| defWhile
 	| defIf
-	| l=expr '=' r=expr ';'
+	| l = expr '=' r = expr ';'
 	| 'return' expr? ';'
 	| expr ';'
-	;
+	| IDENT '(' params ')' ';';
 
-expr
-	: expr '.' IDENT
+expr:
+	expr '.' IDENT
 	| expr '[' expr ']'
-	| l=expr op=('*' | '/') r=expr
-	| l=expr op=('+' | '-') r=expr
+	| l = expr op = ('*' | '/') r = expr
+	| l = expr op = ('+' | '-') r = expr
 	| '(' expr ')'
 	| IDENT
 	| IDENT '(' (expr ',')* expr ')'
 	| LITENT
 	| LITREAL
+	| LITCHAR
 	| '<' tipo '>' '(' expr ')'
-	| '\'' IDENT '\''
-	;
+	| '\'' IDENT '\'';
 
 cond:
-	  expr ('<' | '>' | '<=' | '>=' | '==' | '!=') expr
+	expr ('<' | '>' | '<=' | '>=' | '==' | '!=') expr
 	| cond ('&&' | '||') cond
 	| 'true'
-	| 'false'
-	;
+	| 'false';
 
-defVar: 'var' IDENT ':' tipo ';'
-	;
+defVar: 'var' IDENT ':' tipo ';';
 
-defStruct: 'struct' IDENT '{' campos '}' ';'
-	;
+defStruct: 'struct' IDENT '{' campos '}' ';';
 
-campos: campo*
-	;
+campos: campo*;
 
-campo: IDENT ':' tipo ';'
-	;
-	
-defFunc: IDENT '(' params ')' (':' tipo)? '{' defLocales sentencias '}'
-	;
+campo: IDENT ':' tipo ';';
 
+defFunc:
+	IDENT '(' params ')' (':' tipo)? '{' defLocales sentencias '}';
 
-params: (param ',')* param
-	|
-	;
+params: (param ',')* param |;
 
-param: IDENT ':' tipo
-	;
-	
-defLocales: defLocal*
-	;
+param: IDENT ':' tipo;
 
-defLocal: defVar | defStruct
-	;
+defLocales: defLocal*;
 
-tipo: 'int'
-	| 'float'
-	| 'char'
-	| '[' LITENT ']' tipo
-	| IDENT
-	;
+defLocal: defVar | defStruct;
 
-defWhile: 'while' '(' cond ')' '{' sentencias '}' ;
+tipo: 'int' | 'float' | 'char' | '[' LITENT ']' tipo | IDENT;
 
-defIf: 'if' '(' cond ')' '{' sentencias '}' ('else' '{' sentencias '}')? ;
+defWhile: 'while' '(' cond ')' '{' sentencias '}';
+
+defIf:
+	'if' '(' cond ')' '{' sentencias '}' (
+		'else' '{' sentencias '}'
+	)?;
