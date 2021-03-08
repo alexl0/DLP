@@ -1,11 +1,18 @@
 grammar Grammar;
 import Lexicon;
+@parser::header {
+    import ast.*;
+}
+start returns[Program ast]
+	:definiciones { $ast=new Program($definiciones.list); } EOF;
 
-start: definiciones EOF;
+definiciones returns[List<Definicion> list = new ArrayList<Definicion>();]
+	: (definicion { $list.add($definicion.ast); })+;
 
-definiciones: definicion+;
-
-definicion: defVar | defStruct | defFunc;
+definicion returns[Definition ast]
+	:defVar
+	| defStruct
+	| defFunc;
 
 sentencias: sentencia*;
 
