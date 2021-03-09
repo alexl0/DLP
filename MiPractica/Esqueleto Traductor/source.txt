@@ -25,7 +25,7 @@ potencia(base:float, exponente:int):float {
 	return total;
 }
 
-funcionVacia(){}
+funcionVacia(base:float,){}
 	
 letraHipoteca(capital:float, meses:int, interes:float):float {
 	var mensual:float;

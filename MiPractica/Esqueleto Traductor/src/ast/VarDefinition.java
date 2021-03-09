@@ -12,18 +12,24 @@ import visitor.*;
 
 public class VarDefinition extends AbstractDefinition {
 
-	public VarDefinition(String name, Type type) {
+    public enum VarScope {
+        GLOBAL, LOCAL, PARAM
+    };
+
+	public VarDefinition(String name, Type type, VarScope scope) {
 		this.name = name;
 		this.type = type;
+		this.scope = scope;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(type);
 	}
 
-	public VarDefinition(Object name, Object type) {
+	public VarDefinition(Object name, Object type, VarScope scope) {
 		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
 		this.type = (Type) getAST(type);
+		this.scope = scope;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
@@ -44,6 +50,14 @@ public class VarDefinition extends AbstractDefinition {
 		this.type = type;
 	}
 
+    public VarScope getScope() {
+        return scope;
+    }
+
+    public void setScope(VarScope scope) {
+        this.scope = scope;
+    }
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -51,8 +65,9 @@ public class VarDefinition extends AbstractDefinition {
 
 	private String name;
 	private Type type;
+    private VarScope scope;
 
 	public String toString() {
-       return "{name:" + getName() + ", type:" + getType() + "}";
+        return "{name:" + getName() + ", type:" + getType() + ", scope:" + getScope() + "}";
    }
 }

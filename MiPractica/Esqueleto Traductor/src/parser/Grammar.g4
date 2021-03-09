@@ -1,77 +1,119 @@
-grammar Grammar;
-import Lexicon;
+grammar Grammar
+	;
+
+import Lexicon
+	;
+
 @parser::header {
     import ast.*;
+	import ast.VarDefinition.VarScope;
 }
+
 start returns[Program ast]
-	:definiciones { $ast=new Program($definiciones.list); } EOF;
+	: definitions { $ast=new Program($definitions.list); } EOF
+	;
 
-definiciones returns[List<Definicion> list = new ArrayList<Definicion>();]
-	: (definicion { $list.add($definicion.ast); })+;
+definitions returns[List<Definition> list = new ArrayList<Definition>();]
+	: (definition { $list.add($definition.ast); })+
+	;
 
-definicion returns[Definition ast]
-	:defVar
-	| defStruct
-	| defFunc;
+definition returns[Definition ast]
+	: defVar			{$ast=$defVar.ast;}
+	| defStruct			{$ast=$defStruct.ast;}
+	| defFunc			{$ast= $defFunc.ast;}
+	;
 
-sentencias: sentencia*;
+sentencias returns [List<Statment> list = new ArrayList<>();]
+	: (sentencia {$list.add($sentencia.ast)})*
+	;
 
-sentencia:
-	'read' expr ';'
-	| 'print' expr ';'
-	| 'printsp' expr ';'
-	| 'println' expr ';'
-	| defWhile
-	| defIf
-	| l = expr '=' r = expr ';'
-	| 'return' expr? ';'
-	| expr ';'
-	| IDENT '(' params ')' ';';
+sentencia returns [Statment ast]
+	: 'read' expr ';' 			{$ast = new Read($expr.ast);}
+	| 'print' expr ';' 			{$ast = new Print($expr.ast);}
+	| 'printsp' expr ';' 		{$ast = new Printsp($expr.ast);}
+	| 'println' expr ';' 		{$ast = new Println($expr.ast);}
+	| 'println' ';'				{$ast = new Println(new VoidConstant());}
+	| defWhile					{$ast = $defWhile.ast;}
+	| defIf						{$ast = $defIf.ast;}
+	| l = expr '=' r = expr ';'	{$ast = new Assignment($l.ast, $r.ast);}
+	| 'return' expr ';'			{$ast = new Return($expr.ast);}
+	| 'return' ';'				{$ast = new Return(new VoidConstant());}
+	| IDENT '(' params ')' ';'	{$ast = new FuncInvocation($IDENT, $args.list);}
+	;
 
-expr:
-	expr '.' IDENT
-	| expr '[' expr ']'
-	| l = expr op = ('*' | '/') r = expr
-	| l = expr op = ('+' | '-') r = expr
-	| '(' expr ')'
-	| IDENT
-	| IDENT '(' (expr ',')* expr ')'
-	| LITENT
-	| LITREAL
-	| LITCHAR
-	| '<' tipo '>' '(' expr ')'
-	| '\'' IDENT '\'';
+expr returns[Expression ast]
+	: expr '.' IDENT						{ $ast = new FieldAccessExpression($expr.ast,$IDENT); }
+	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
+	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
+	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
+	| '(' expr ')'							{ $ast = $expr.ast; }
+	| IDENT									{ $ast = new Variable($IDENT); }
+	| IDENT '(' exprs ')'					{ $ast = new FuncInvocationExpression($IDENT,$exprs.list); }
+	| LITENT								{ $ast = new IntConstant($LITENT); }
+	| LITREAL								{ $ast = new RealConstant($LITREAL); }
+	| LITCHAR								{ $ast = new CharConstant($LITCHAR); }
+	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
+	| '\'' IDENT '\''						
+	;
 
-cond:
-	expr ('<' | '>' | '<=' | '>=' | '==' | '!=') expr
+type returns[Type ast]
+	: i='int' 				{$ast=new IntType(); $ast.setPositions($i);}
+	| f='float' 			{$ast=new RealType(); $ast.setPositions($f);}
+	| c='char' 				{$ast=new CharType(); $ast.setPositions($c);}
+	| '[' LITENT ']' type 	{$ast=new ArrayType(new IntConstant($LITENT), $type.ast);}
+	| IDENT					{$ast=new VarType($IDENT);}
+	;
+
+params returns [List<VarDefinition> list = new ArrayList<>()]
+	: (param {$list.add($param.ast);} ',')* param{$list.add($param.ast);}
+	|
+	;
+
+param
+	: IDENT ':' type
+	;
+
+defVar returns[Definition ast]
+	: 'var' IDENT ':' type ';' {$ast=new VarDefinition($IDENT, $type.ast, VarScope.GLOBAL);}
+	;
+
+campos
+	: campo*
+	;
+
+campo
+	: IDENT ':' type ';'
+	;
+
+cond
+	: expr ('<' | '>' | '<=' | '>=' | '==' | '!=') expr
 	| cond ('&&' | '||') cond
-	| 'true'
-	| 'false';
+	;
 
-defVar: 'var' IDENT ':' tipo ';';
+defStruct
+	: 'struct' IDENT '{' campos '}' ';'
+	;
 
-defStruct: 'struct' IDENT '{' campos '}' ';';
+defFunc
+	: IDENT '(' params ')' (':' type)? '{' defLocales sentencias '}'
+	;
 
-campos: campo*;
+defLocales
+	: defLocal*
+	;
 
-campo: IDENT ':' tipo ';';
+defLocal
+	: defVar | defStruct
+	;
 
-defFunc:
-	IDENT '(' params ')' (':' tipo)? '{' defLocales sentencias '}';
+defWhile
+	: 'while' '(' cond ')' '{' sentencias '}'
+	;
 
-params: (param ',')* param |;
+defIf
+	:'if' '(' cond ')' '{' sentencias '}' ('else' '{' sentencias '}')?
+	;
 
-param: IDENT ':' tipo;
-
-defLocales: defLocal*;
-
-defLocal: defVar | defStruct;
-
-tipo: 'int' | 'float' | 'char' | '[' LITENT ']' tipo | IDENT;
-
-defWhile: 'while' '(' cond ')' '{' sentencias '}';
-
-defIf:
-	'if' '(' cond ')' '{' sentencias '}' (
-		'else' '{' sentencias '}'
-	)?;
+exprs returns [List<Expression> list = new ArrayList<Expression>()]
+	: ((expr { $list.add($expr.ast); } ',')* expr { $list.add($expr.ast); })?
+	;
