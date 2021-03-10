@@ -23,11 +23,11 @@ definition returns[Definition ast]
 	| defFunc			{$ast= $defFunc.ast;}
 	;
 
-sentencias returns [List<Statment> list = new ArrayList<>();]
-	: (sentencia {$list.add($sentencia.ast)})*
+sentencias returns [List<Sentence> list = new ArrayList<>();]
+	: (sentencia {$list.add($sentencia.ast);})*
 	;
 
-sentencia returns [Statment ast]
+sentencia returns [Sentence ast]
 	: 'read' expr ';' 			{$ast = new Read($expr.ast);}
 	| 'print' expr ';' 			{$ast = new Print($expr.ast);}
 	| 'printsp' expr ';' 		{$ast = new Printsp($expr.ast);}
@@ -96,16 +96,16 @@ defStruct returns[StructDefinition ast]
 	: 'struct' IDENT '{' fields '}' ';' { $ast = new StructDefinition(new VarType($IDENT),$fields.list); }
 	;
 
-defFunc returns[FuncDefinition ast]
-	: IDENT '(' params ')' (':' type)	'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, $type.ast,			$defVars.list, $sentences.list); }
-	| IDENT '(' params ')'  			'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, new VoidType(),	$defVars.list, $sentences.list); }
+defFunc returns[FunDefinition ast]
+	: IDENT '(' params ')' (':' type)	'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, $type.ast,			$defVars.list, $sentencias.list); }
+	| IDENT '(' params ')'  			'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, new VoidType(),	$defVars.list, $sentencias.list); }
 	;
 
 defWhile returns [While ast]
-	: 'while' '(' expr ')' '{' sentencias '}'	{ $ast = new While($expr.ast, $sentences.list); }
+	: 'while' '(' expr ')' '{' sentencias '}'	{ $ast = new While($expr.ast, $sentencias.list); }
 	;
 
 defIf returns [IfElse ast]
-	: 'if' '(' expr ')' '{' sentencias '}'														{ $ast = new IfElse($expr.ast, $sentences.list, 	null); }
+	: 'if' '(' expr ')' '{' sentencias '}'														{ $ast = new IfElse($expr.ast, $sentencias.list, 	null); }
 	| 'if' '(' expr ')' '{' ifSentences=sentencias '}' 'else' '{' elseSentences=sentencias '}'	{ $ast = new IfElse($expr.ast, $ifSentences.list, 	$elseSentences.list); }
 	;
