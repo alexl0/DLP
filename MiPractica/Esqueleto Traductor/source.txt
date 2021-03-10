@@ -1,59 +1,71 @@
 /*
- Hipoteca.txt v1.3
+NOTA. Este ejemplo solo pretende mostrar la sintaxis del lenguaje mediante fragmentos de codigo inconexos. 
+No esta pensado para ser ejecutado ya que realiza ninguna tarea concreta.
 
-- Programa de ejemplo que muestra las caracteristicas del lenguaje
+Aclaraciones:
 - La sintaxis tiene que ser obligatoriamente la que se muestra en este ejemplo
-
+- Las declaraciones de funciones y variables globales pueden venir en cualquier orden.
+- Si la funcion no tiene valor de retorno no se pone nada entre los parentesis de los parametros y las llaves de las sentencias
+- Las funciones deben tener parentesis aunque no tengan parametros
+- Una funcion podra declarar variables locales solo al inicio de su cuerpo. Por tanto no podra haber declaracion de variables locales en cualquier lugar de la funcion ni dentro de bloques anidados (por ejemplo el creado por un while)
+- No pueden aparecer expresiones como sentencias
+- Las llaves son obligatorias en el if/while aunque solo haya una sentencia dentro. Tambien son obligatorios los parentesis alrededor de la condicion
 */
 
-potencia(base:float, exponente:int):float {
-	var total:float;
+//// ------------------------------
+//// DEFINICIONES de datos y tipos
 
-	if (exponente == 0) {
-		total = 1.0;
-	} else {
-		if (exponente < 0) {
-			total = 1.0 / potencia(base, 0 - exponente);
-		} else { 
-			total = base;
-			while (exponente > 1) {
-				total = total * base;
-				exponente = exponente - 1;
-			}
-		}
-	}
-	return total;
+// Tipos simples ---------
+var a:int;
+var b:char;
+
+// Arrays ---------
+var c:[5] float;
+var h:[3][2] float;  // Pueden ser mas de 2 dimensiones
+
+// Structs ------------- 
+struct Direccion {
+	portal:int;
+	codigoPostal:int;
+};
+
+var d1:Direccion;
+var d2:Direccion;
+
+struct Persona {
+	edad:int;
+	direccion:Direccion;
+};
+
+// Combinacion de Arrays y Structs -------------
+var f:[6] Persona;
+
+struct Empresa {
+	cif:[9] char;
+	empleados:[10] Persona;
+};
+
+var microsoft: Empresa;
+
+//// ------------------------------
+//// DEFINICIONES de funciones
+
+dobleSuma(a:int, b:int): int {
+	var local:int;
+
+	local = (a + b) * 2;
+	return local * 2;
 }
 
-funcionVacia(base:float){}
-	
-letraHipoteca(capital:float, meses:int, interes:float):float {
-	var mensual:float;
+var z:int;	// Se puede definir entre funciones
 
-	mensual = interes / 12.0;
-	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - meses)));
+dobleSuma2(a:int, b:int): int {
+	var local:int;
+
+	local = (a + b) * 2;
+	return local * 2;
 }
 
-
-main() {
-	var precioVivienda:float;
-	var mesesHipoteca:int;
-	var interes:float;
-  var caracter1:char;
-
-/*
-	read precioVivienda;
-	read mesesHipoteca;
-	read interes;
-*/
-	precioVivienda = 200000.0;
-	mesesHipoteca = 30 * 12;
-	interes = 2.04;	
-  	caracter1 = '0';
-	funcionVacia();
-
-	println letraHipoteca(precioVivienda, mesesHipoteca, interes);
-
-//	Con los datos anteriores deberan salir (redondeando) 743 euros de letra al mes
-
+escribeEdad(num:int) {
+	printsp microsoft.empleados;
 }
