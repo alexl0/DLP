@@ -41,6 +41,10 @@ sentencia returns [Sentence ast]
 	| IDENT '(' exprs ')' ';'	{$ast = new FuncInvocation($IDENT, $exprs.list);}
 	;
 
+exprs returns [List<Expression> list = new ArrayList<Expression>()]
+	: ((expr { $list.add($expr.ast); } ',')* expr { $list.add($expr.ast); })?
+	;
+
 expr returns[Expression ast]
 	: expr '.' IDENT						{ $ast = new FieldAccessExpression($expr.ast,$IDENT); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
@@ -57,6 +61,32 @@ expr returns[Expression ast]
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
 	| '\'' IDENT '\''
+	;
+
+defVars returns[List<Definition> list = new ArrayList<Definition>();]
+	: ('var' IDENT ':' type ';' { $list.add(new VarDefinition($IDENT,$type.ast,VarScope.LOCAL)); })*
+	;
+
+defVar returns[Definition ast]
+	: 'var' IDENT ':' type ';' {$ast=new VarDefinition($IDENT, $type.ast, VarScope.GLOBAL);}
+	;
+
+defStruct returns[StructDefinition ast]
+	: 'struct' IDENT '{' fields '}' ';' { $ast = new StructDefinition(new VarType($IDENT),$fields.list); }
+	;
+
+defFunc returns[FunDefinition ast]
+	: IDENT '(' params ')' (':' type)	'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, $type.ast,			$defVars.list, $sentencias.list); }
+	| IDENT '(' params ')'  			'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, new VoidType(),	$defVars.list, $sentencias.list); }
+	;
+
+defWhile returns [While ast]
+	: 'while' '(' expr ')' '{' sentencias '}'	{ $ast = new While($expr.ast, $sentencias.list); }
+	;
+
+defIf returns [IfElse ast]
+	: 'if' '(' expr ')' '{' sentencias '}'														{ $ast = new IfElse($expr.ast, $sentencias.list, 	null); }
+	| 'if' '(' expr ')' '{' ifSentences=sentencias '}' 'else' '{' elseSentences=sentencias '}'	{ $ast = new IfElse($expr.ast, $ifSentences.list, 	$elseSentences.list); }
 	;
 
 type returns[Type ast]
@@ -76,36 +106,6 @@ param returns[VarDefinition ast]
 	: IDENT ':' type { $ast = new VarDefinition($IDENT,$type.ast,VarScope.PARAM); }
 	;
 
-defVars returns[List<Definition> list = new ArrayList<Definition>();]
-	: ('var' IDENT ':' type ';' { $list.add(new VarDefinition($IDENT,$type.ast,VarScope.LOCAL)); })*
-	;
-
-defVar returns[Definition ast]
-	: 'var' IDENT ':' type ';' {$ast=new VarDefinition($IDENT, $type.ast, VarScope.GLOBAL);}
-	;
-
 fields returns[List<StructField> list = new ArrayList<StructField>();]
 	: (IDENT ':' type ';'{ $list.add(new StructField($IDENT,$type.ast)); })+
-	;
-
-exprs returns [List<Expression> list = new ArrayList<Expression>()]
-	: ((expr { $list.add($expr.ast); } ',')* expr { $list.add($expr.ast); })?
-	;
-
-defStruct returns[StructDefinition ast]
-	: 'struct' IDENT '{' fields '}' ';' { $ast = new StructDefinition(new VarType($IDENT),$fields.list); }
-	;
-
-defFunc returns[FunDefinition ast]
-	: IDENT '(' params ')' (':' type)	'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, $type.ast,			$defVars.list, $sentencias.list); }
-	| IDENT '(' params ')'  			'{' defVars sentencias '}'	{ $ast = new FunDefinition($IDENT, $params.list, new VoidType(),	$defVars.list, $sentencias.list); }
-	;
-
-defWhile returns [While ast]
-	: 'while' '(' expr ')' '{' sentencias '}'	{ $ast = new While($expr.ast, $sentencias.list); }
-	;
-
-defIf returns [IfElse ast]
-	: 'if' '(' expr ')' '{' sentencias '}'														{ $ast = new IfElse($expr.ast, $sentencias.list, 	null); }
-	| 'if' '(' expr ')' '{' ifSentences=sentencias '}' 'else' '{' elseSentences=sentencias '}'	{ $ast = new IfElse($expr.ast, $ifSentences.list, 	$elseSentences.list); }
 	;
