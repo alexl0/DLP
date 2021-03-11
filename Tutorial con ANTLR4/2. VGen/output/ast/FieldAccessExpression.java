@@ -8,40 +8,40 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	fieldAccessExpression:expression -> expr:expression  name:String
+//	fieldAccessExpression:expression -> left:expression  right:expression
 
 public class FieldAccessExpression extends AbstractExpression {
 
-	public FieldAccessExpression(Expression expr, String name) {
-		this.expr = expr;
-		this.name = name;
+	public FieldAccessExpression(Expression left, Expression right) {
+		this.left = left;
+		this.right = right;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(expr);
+       setPositions(left, right);
 	}
 
-	public FieldAccessExpression(Object expr, Object name) {
-		this.expr = (Expression) getAST(expr);
-		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+	public FieldAccessExpression(Object left, Object right) {
+		this.left = (Expression) getAST(left);
+		this.right = (Expression) getAST(right);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(expr, name);
+       setPositions(left, right);
 	}
 
-	public Expression getExpr() {
-		return expr;
+	public Expression getLeft() {
+		return left;
 	}
-	public void setExpr(Expression expr) {
-		this.expr = expr;
+	public void setLeft(Expression left) {
+		this.left = left;
 	}
 
-	public String getName() {
-		return name;
+	public Expression getRight() {
+		return right;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setRight(Expression right) {
+		this.right = right;
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class FieldAccessExpression extends AbstractExpression {
 		return v.visit(this, param);
 	}
 
-	private Expression expr;
-	private String name;
+	private Expression left;
+	private Expression right;
 
 	public String toString() {
-       return "{expr:" + getExpr() + ", name:" + getName() + "}";
+       return "{left:" + getLeft() + ", right:" + getRight() + "}";
    }
 }
