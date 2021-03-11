@@ -51,7 +51,7 @@ expr returns[Expression ast]
 	| LITREAL								{ $ast = new RealConstant($LITREAL); }
 	| LITCHAR								{ $ast = new CharConstant($LITCHAR); }
 	| IDENT '(' exprs ')'					{ $ast = new FuncInvocationExpression($IDENT,$exprs.list); }
-	| expr '.' IDENT						{ $ast = new FieldAccessExpression($ctx.expr(0),$IDENT); }
+	| e=expr '.' IDENT						{ $ast = new FieldAccessExpression($e.ast,$IDENT); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }

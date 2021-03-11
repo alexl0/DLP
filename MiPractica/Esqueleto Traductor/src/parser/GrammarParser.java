@@ -567,6 +567,7 @@ public class GrammarParser extends Parser {
 
 	public static class ExprContext extends ParserRuleContext {
 		public Expression ast;
+		public ExprContext e;
 		public ExprContext e1;
 		public ExprContext l;
 		public Token IDENT;
@@ -826,6 +827,8 @@ public class GrammarParser extends Parser {
 					case 5:
 						{
 						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx.e = _prevctx;
+						_localctx.e = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(187);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
@@ -833,7 +836,7 @@ public class GrammarParser extends Parser {
 						match(T__5);
 						setState(189);
 						((ExprContext)_localctx).IDENT = match(IDENT);
-						 ((ExprContext)_localctx).ast =  new FieldAccessExpression(_localctx.expr(0),((ExprContext)_localctx).IDENT); 
+						 ((ExprContext)_localctx).ast =  new FieldAccessExpression(((ExprContext)_localctx).e.ast,((ExprContext)_localctx).IDENT); 
 						}
 						break;
 					case 6:
