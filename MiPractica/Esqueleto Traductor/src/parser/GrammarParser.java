@@ -577,8 +577,8 @@ public class GrammarParser extends Parser {
 		public Token LITCHAR;
 		public TypeContext type;
 		public Token op;
-		public ExprContext r;
 		public ExprContext e2;
+		public ExprContext r;
 		public TerminalNode OPEN_PAREN() { return getToken(GrammarParser.OPEN_PAREN, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -730,14 +730,16 @@ public class GrammarParser extends Parser {
 					case 1:
 						{
 						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx.e1 = _prevctx;
+						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(167);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(168);
 						match(T__5);
 						setState(169);
-						((ExprContext)_localctx).expr = expr(16);
-						 ((ExprContext)_localctx).ast =  new FieldAccessExpression(((ExprContext)_localctx).expr.ast,((ExprContext)_localctx).IDENT); 
+						((ExprContext)_localctx).e2 = ((ExprContext)_localctx).expr = expr(16);
+						 ((ExprContext)_localctx).ast =  new FieldAccessExpression(((ExprContext)_localctx).e1.ast,((ExprContext)_localctx).e2.ast); 
 						}
 						break;
 					case 2:

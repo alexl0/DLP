@@ -46,7 +46,7 @@ exprs returns [List<Expression> list = new ArrayList<Expression>()]
 	;
 
 expr returns[Expression ast]
-	: expr '.' expr						{ $ast = new FieldAccessExpression($expr.ast,$IDENT); }
+	: e1=expr '.' e2=expr					{ $ast = new FieldAccessExpression($e1.ast,$e2.ast); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }

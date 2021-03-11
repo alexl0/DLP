@@ -238,10 +238,12 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class FieldAccessExpression { Expression expr;  String name; }
+	//	class FieldAccessExpression { Expression left;  Expression right; }
 	public Object visit(FieldAccessExpression node, Object param) {
-		if (node.getExpr() != null)
-			node.getExpr().accept(this, param);
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
 		return null;
 	}
 

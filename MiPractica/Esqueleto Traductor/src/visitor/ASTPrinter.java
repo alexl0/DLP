@@ -430,14 +430,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class FieldAccessExpression { Expression expr;  String name; }
+	//	class FieldAccessExpression { Expression left;  Expression right; }
 	public Object visit(FieldAccessExpression node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "FieldAccessExpression", node, false);
 
-		visit(indent + 1, "expr", "Expression",node.getExpr());
-		print(indent + 1, "name", "String", node.getName());
+		visit(indent + 1, "left", "Expression",node.getLeft());
+		visit(indent + 1, "right", "Expression",node.getRight());
 		return null;
 	}
 
