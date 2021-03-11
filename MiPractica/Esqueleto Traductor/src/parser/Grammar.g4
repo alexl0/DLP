@@ -46,16 +46,16 @@ exprs returns [List<Expression> list = new ArrayList<Expression>()]
 	;
 
 expr returns[Expression ast]
-	: e1=expr '.' e2=expr					{ $ast = new FieldAccessExpression($e1.ast,$e2.ast); }
+	: IDENT									{ $ast = new Variable($IDENT); }
+	| LITENT								{ $ast = new IntConstant($LITENT); }
+	| LITREAL								{ $ast = new RealConstant($LITREAL); }
+	| LITCHAR								{ $ast = new CharConstant($LITCHAR); }
+	| IDENT '(' exprs ')'					{ $ast = new FuncInvocationExpression($IDENT,$exprs.list); }
+	| expr '.' IDENT						{ $ast = new FieldAccessExpression($ctx.expr(0),$IDENT); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| '(' expr ')'							{ $ast = $expr.ast; }
-	| IDENT									{ $ast = new Variable($IDENT); }
-	| IDENT '(' exprs ')'					{ $ast = new FuncInvocationExpression($IDENT,$exprs.list); }
-	| LITENT								{ $ast = new IntConstant($LITENT); }
-	| LITREAL								{ $ast = new RealConstant($LITREAL); }
-	| LITCHAR								{ $ast = new CharConstant($LITCHAR); }
 	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
 	| l=expr op=( '!=' | '==' | '>' | '<' | '>=' | '<=' ) r=expr	{ $ast = new ComparableExpression($l.ast,$op,$r.ast); }
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }

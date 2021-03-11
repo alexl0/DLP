@@ -8,40 +8,40 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	fieldAccessExpression:expression -> left:expression  right:expression
+//	fieldAccessExpression:expression -> expr:expression  name:String
 
 public class FieldAccessExpression extends AbstractExpression {
 
-	public FieldAccessExpression(Expression left, Expression right) {
-		this.left = left;
-		this.right = right;
+	public FieldAccessExpression(Expression expr, String name) {
+		this.expr = expr;
+		this.name = name;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(left, right);
+       setPositions(expr);
 	}
 
-	public FieldAccessExpression(Object left, Object right) {
-		this.left = (Expression) getAST(left);
-		this.right = (Expression) getAST(right);
+	public FieldAccessExpression(Object expr, Object name) {
+		this.expr = (Expression) getAST(expr);
+		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(left, right);
+       setPositions(expr, name);
 	}
 
-	public Expression getLeft() {
-		return left;
+	public Expression getExpr() {
+		return expr;
 	}
-	public void setLeft(Expression left) {
-		this.left = left;
+	public void setExpr(Expression expr) {
+		this.expr = expr;
 	}
 
-	public Expression getRight() {
-		return right;
+	public String getName() {
+		return name;
 	}
-	public void setRight(Expression right) {
-		this.right = right;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class FieldAccessExpression extends AbstractExpression {
 		return v.visit(this, param);
 	}
 
-	private Expression left;
-	private Expression right;
+	private Expression expr;
+	private String name;
 
 	public String toString() {
-       return "{left:" + getLeft() + ", right:" + getRight() + "}";
+       return "{expr:" + getExpr() + ", name:" + getName() + "}";
    }
 }
