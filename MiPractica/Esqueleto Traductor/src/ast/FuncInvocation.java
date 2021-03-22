@@ -58,11 +58,14 @@ public class FuncInvocation extends AbstractSentence {
    }
 	
 	//Añadido
-    private FunDefinition definition;
-    public FunDefinition getDefinition() {
-        return definition;
-    }
-    public void setDefinition(FunDefinition definition) {
-        this.definition = definition;
-    }
+    private FunDefinition funcDefinition;
+
+	public FunDefinition getFuncDefinition() {
+		return funcDefinition;
+	}
+
+	public void setFuncDefinition(FunDefinition funcDefinition) {
+		this.funcDefinition = funcDefinition;
+	}
+
 }

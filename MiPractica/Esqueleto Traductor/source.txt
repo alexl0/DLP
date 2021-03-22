@@ -2,5 +2,6 @@ var a:int;
 var a:int; //Error: variable ya definida
 
 func(){
+	print a;
 	print c; //Error: variable no definida
 }

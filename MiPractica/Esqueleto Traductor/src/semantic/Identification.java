@@ -5,13 +5,15 @@
 
 package semantic;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ast.*;
+import ast.VarDefinition.VarScope;
 import main.*;
 import visitor.*;
 
 public class Identification extends DefaultVisitor {
-
-	private ContextMap cm=new ContextMap();
 
 	public Identification(ErrorManager errorManager) {
 		this.errorManager = errorManager;
@@ -32,31 +34,33 @@ public class Identification extends DefaultVisitor {
 	// ...
 	// ...
 
-	// # --------------------------------------------------------
-	// Métodos auxiliares recomendados (opcionales) -------------
 
 	//	class VarDefinition { String name;  Type type; }
 	public Object visit(VarDefinition node, Object param) {
 		super.visit(node, param);
 
-		if(cm.getFromTop(node.getName())!=null)
-			this.error(node.getName(), node.getStart());
-		else
-			cm.put(param,  node);
+		if(varsContextMap.getFromTop(node.getName()) != null)
+			error("Variable ya definida: "+node.getName(), node.getStart());
+
+		node.setScope(param instanceof VarScope ? (VarScope) param : VarScope.GLOBAL);
+
+		varsContextMap.put(node.getName(), node);
+
 
 		return null;
 	}
 
 	//	class StructDefinition { VarType name;  List<StructField> definitions; }
 	public Object visit(StructDefinition node, Object param) {
-		if(cm.getFromTop(node.getName().getType())!=null)
-			this.error(node.getName().getType(), node.getStart());
-		else
-			cm.put(param,  node);
+		if(varsContextMap.getFromAny(node.getName().getType()) != null)
+			error("Estructura ya definida: " + node.getName().getType(),node.getStart());
 
-		cm.set();
+		varsContextMap.put(node.getName().getType(), node);
+		structsMap.put(node.getName().getType(), node);
+
+		varsContextMap.set();
 		super.visit(node, param);
-		cm.reset();
+		varsContextMap.reset();
 
 		return null;
 	}
@@ -64,36 +68,27 @@ public class Identification extends DefaultVisitor {
 	//	class FunDefinition { String name;  List<Definition> params;  Type return_t;  List<VarDefinition> definitions;  List<Sentence> sentences; }
 	public Object visit(FunDefinition node, Object param) {
 
-		if(cm.getFromTop(node.getName())!=null)
-			this.error(node.getName(), node.getStart());
-		else
-			cm.put(param,  node);
+		if(functionsMap.get(node.getName()) != null)
+			error("Función ya definida: " + node.getName(), node.getStart());
+		functionsMap.put(node.getName(), node);
 
-		cm.set();
+		varsContextMap.set();
 		super.visit(node, param);
-		cm.reset();
+		varsContextMap.reset();
 
 		return null;
 	}
 
 	//	class FuncInvocation { String name;  List<Expression> params; }
 	public Object visit(FuncInvocation node, Object param) {
-
-		//Obtener de la pila
-		Object o=cm.getFromAny(node.getName());
-
-		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
-		if(o==null)
-			this.error(node.getName(), node.getStart());
-
-		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
-		else if(! (o instanceof FunDefinition))
-			this.error(node.getName(), node.getStart());
-
-		//Asociar lo que encuentre al nodo
-		node.setDefinition((FunDefinition)o);
-
 		super.visit(node, param);
+
+		FunDefinition definition = functionsMap.get(node.getName());
+
+		if(definition == null)
+			error(node.getName(), node.getStart());
+
+		node.setFuncDefinition(definition);
 
 		return null;
 	}
@@ -101,19 +96,12 @@ public class Identification extends DefaultVisitor {
 	//	class Variable { String name; }
 	public Object visit(Variable node, Object param) {
 
-		//Obtener de la pila
-		Object o = cm.getFromAny(node.getName());
+		Definition definition = varsContextMap.getFromAny(node.getName());
 
-		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
-		if(o==null)
-			this.error(node.getName(), node.getStart());
+		if(definition == null)
+			error("Variable no definida: " + node.getName(), node.getStart());
 
-		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
-		else if(! (o instanceof VarDefinition))
-			this.error(node.getName(), node.getStart());
-
-		//Asociar lo que encuentre al nodo
-		node.setVariable((VarDefinition)o);
+		node.setVarDefinition((VarDefinition) definition);
 
 		return null;
 	}
@@ -121,23 +109,22 @@ public class Identification extends DefaultVisitor {
 	//	class VarType { String type; }
 	public Object visit(VarType node, Object param) {
 
-		//Obtener de la pila
-		Object o = cm.getFromAny(node.getType());
+		super.visit(node, param);
 
-		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
-		if(o==null)
-			this.error(node.getType(), node.getStart());
+		StructDefinition definition = structsMap.get(node.getType());
+		if(definition == null)
+			error("Struct no definido: " + node.getType(), node.getStart());
 
-		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
-		else if(! (o instanceof StructDefinition))
-			this.error(node.getType(), node.getStart());
-
-		//Asociar lo que encuentre al nodo
-		node.setStructDefinition((StructDefinition)o);
+		node.setStructDefinition(definition);
 
 		return null;
 	}
 
+
+
+	// # --------------------------------------------------------
+	// Métodos auxiliares recomendados (opcionales) -------------
+	@SuppressWarnings("unused")
 	private void error(String msg) {
 		error(msg, null);
 	}
@@ -145,7 +132,9 @@ public class Identification extends DefaultVisitor {
 	private void error(String msg, Position position) {
 		errorManager.notify("Identification", msg, position);
 	}
-
-
 	private ErrorManager errorManager;
+	private Map<String, StructDefinition> structsMap = new HashMap<String, StructDefinition>();
+	private Map<String, FunDefinition> functionsMap = new HashMap<String, FunDefinition>();
+	private ContextMap<String, Definition> varsContextMap = new ContextMap<String, Definition>();
+
 }

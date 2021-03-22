@@ -43,12 +43,15 @@ public class Variable extends AbstractExpression {
    }
 	
 	//Añadido
-	private VarDefinition variable;
-	public VarDefinition getVariable() {
-		return variable;
+	private VarDefinition varDefinition;
+
+	public VarDefinition getVarDefinition() {
+		return varDefinition;
 	}
-	public void setVariable(VarDefinition variable) {
-		this.variable = variable;
+
+	public void setVarDefinition(VarDefinition varDefinition) {
+		this.varDefinition = varDefinition;
 	}
+
 
 }
