@@ -49,8 +49,14 @@ public class Identification extends DefaultVisitor {
 
 	//	class StructDefinition { VarType name;  List<StructField> definitions; }
 	public Object visit(StructDefinition node, Object param) {
+		if(cm.getFromTop(node.getName().getType())!=null)
+			this.error(node.getName().getType(), node.getStart());
+		else
+			cm.put(param,  node);
 
+		cm.set();
 		super.visit(node, param);
+		cm.reset();
 
 		return null;
 	}
@@ -94,11 +100,41 @@ public class Identification extends DefaultVisitor {
 
 	//	class Variable { String name; }
 	public Object visit(Variable node, Object param) {
+
+		//Obtener de la pila
+		Object o = cm.getFromAny(node.getName());
+
+		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
+		if(o==null)
+			this.error(node.getName(), node.getStart());
+
+		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
+		else if(! (o instanceof VarDefinition))
+			this.error(node.getName(), node.getStart());
+
+		//Asociar lo que encuentre al nodo
+		node.setVariable((VarDefinition)o);
+
 		return null;
 	}
 
 	//	class VarType { String type; }
 	public Object visit(VarType node, Object param) {
+
+		//Obtener de la pila
+		Object o = cm.getFromAny(node.getStructDefinition().getName().getType());
+
+		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
+		if(o==null)
+			this.error(node.getStructDefinition().getName().getType(), node.getStart());
+
+		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
+		else if(! (o instanceof StructDefinition))
+			this.error(node.getStructDefinition().getName().getType(), node.getStart());
+
+		//Asociar lo que encuentre al nodo
+		node.setStructDefinition((StructDefinition)o);
+
 		return null;
 	}
 
