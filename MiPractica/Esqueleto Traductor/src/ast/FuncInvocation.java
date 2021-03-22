@@ -56,4 +56,13 @@ public class FuncInvocation extends AbstractSentence {
 	public String toString() {
        return "{name:" + getName() + ", params:" + getParams() + "}";
    }
+	
+	//Añadido
+    private FunDefinition definition;
+    public FunDefinition getDefinition() {
+        return definition;
+    }
+    public void setDefinition(FunDefinition definition) {
+        this.definition = definition;
+    }
 }

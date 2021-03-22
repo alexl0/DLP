@@ -41,4 +41,13 @@ public class VarType extends AbstractType {
 	public String toString() {
        return "{type:" + getType() + "}";
    }
+
+	//Añadido
+	public StructDefinition structDefinition;
+	public StructDefinition getStructDefinition() {
+		return structDefinition;
+	}
+	public void setStructDefinition(StructDefinition structDefinition) {
+		this.structDefinition = structDefinition;
+	}
 }

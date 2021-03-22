@@ -41,4 +41,14 @@ public class Variable extends AbstractExpression {
 	public String toString() {
        return "{name:" + getName() + "}";
    }
+	
+	//Añadido
+	private VarDefinition variable;
+	public VarDefinition getVariable() {
+		return variable;
+	}
+	public void setVariable(VarDefinition variable) {
+		this.variable = variable;
+	}
+
 }

@@ -206,16 +206,6 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class StructType { List<StructField> fields; }
-	public Object visit(StructType node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "StructType", node, false);
-
-		visit(indent + 1, "fields", "List<StructField>",node.getFields());
-		return null;
-	}
-
 	//	class ErrorType {  }
 	public Object visit(ErrorType node, Object param) {
 		int indent = ((Integer)param).intValue();
