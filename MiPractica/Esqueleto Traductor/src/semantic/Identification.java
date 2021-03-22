@@ -122,15 +122,15 @@ public class Identification extends DefaultVisitor {
 	public Object visit(VarType node, Object param) {
 
 		//Obtener de la pila
-		Object o = cm.getFromAny(node.getStructDefinition().getName().getType());
+		Object o = cm.getFromAny(node.getType());
 
 		//Comprobar que la variable está definida. Si no lo está, lanzar un error.
 		if(o==null)
-			this.error(node.getStructDefinition().getName().getType(), node.getStart());
+			this.error(node.getType(), node.getStart());
 
 		//Comprobar que la definicion es de lo que tienes que ser (funcInvocation que es de tipo funcion)
 		else if(! (o instanceof StructDefinition))
-			this.error(node.getStructDefinition().getName().getType(), node.getStart());
+			this.error(node.getType(), node.getStart());
 
 		//Asociar lo que encuentre al nodo
 		node.setStructDefinition((StructDefinition)o);
