@@ -56,7 +56,7 @@ expr returns[Expression ast]
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| '(' expr ')'							{ $ast = $expr.ast; }
-	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
+	| 'cast' '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
 	| l=expr op=( '!=' | '==' | '>' | '<' | '>=' | '<=' ) r=expr	{ $ast = new ComparableExpression($l.ast,$op,$r.ast); }
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
