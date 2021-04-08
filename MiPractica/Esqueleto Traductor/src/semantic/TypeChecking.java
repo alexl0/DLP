@@ -21,10 +21,27 @@ public class TypeChecking extends DefaultVisitor {
     *
     * Si se ha usado VGen, solo hay que copiarlos de la clase 'visitor/_PlantillaParaVisitors.txt'.
     */
-
+    
     // public Object visit(Program prog, Object param) {
     //      ...
     // }
+    
+	//	class Read { Expression expression; }
+	public Object visit(Read node, Object param) {
+
+		super.visit(node, param);
+
+		predicado(node.getExpression().isModificable(), "La expresión no es modificable", node);
+
+		return null;
+	}
+	
+	//	class Variable { String name; }
+	public Object visit(Variable node, Object param) {
+		super.visit(node,  param);
+		node.setModoificable(true);
+		return null;
+	}
 
     // ...
     // ...
