@@ -1,22 +1,25 @@
 /**
- * @generated VGen (for ANTLR) 1.7.1
+ * @generated VGen (for ANTLR) 1.6.0
  */
 
 package ast;
 
 import visitor.*;
 
-//	intType:type -> 
+//	intType:type ->
 
 public class IntType extends AbstractType {
 
-	@Override
-	public Object accept(Visitor v, Object param) { 
-		return v.visit(this, param);
-	}
+    @Override
+    public Object accept(Visitor v, Object param) {
+        return v.visit(this, param);
+    }
 
+    public int getSize() {
+        return 2;
+    }
 
-	public String toString() {
-       return "{IntType}";
-   }
+    public String toString() {
+        return "{IntType}";
+    }
 }

@@ -45,14 +45,24 @@ public class VarDefinition extends AbstractAST  {
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
 	private Type type;
 	private String name;
 
-	public String toString() {
-       return "{type:" + getType() + ", name:" + getName() + "}";
-   }
+    public String toString() {
+        return "{type:" + getType() + ", name:" + getName() + "}";
+    }
+
+    private int address;
+
+    public int getAddress() {
+        return address;
+    }
+
+    public void setAddress(int address) {
+        this.address = address;
+    }
 }

@@ -13,14 +13,16 @@ import visitor.*;
  */
 public class MemoryAllocation extends DefaultVisitor {
 
-    /*
-    * Poner aquí los visit.
-    *
-    * Si se ha usado VGen, solo hay que copiarlos de la clase 'visitor/_PlantillaParaVisitors.txt'.
-    */
+    // class Programa { List<DefVariable> definiciones; List<Sentencia> sentencias; }
+    public Object visit(Program node, Object param) {
 
-    // public Object visit(Program prog, Object param) {
-    //      ...
-    // }
+        int currentAddress = 0;
+
+        for (VarDefinition child : node.getDefinitions()) {
+            child.setAddress(currentAddress);
+            currentAddress += child.getType().getSize();
+        }
+        return null;
+    }
 
 }
