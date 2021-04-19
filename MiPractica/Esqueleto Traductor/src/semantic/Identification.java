@@ -40,7 +40,7 @@ public class Identification extends DefaultVisitor {
 		super.visit(node, param);
 
 		if(varsContextMap.getFromTop(node.getName()) != null)
-			error("Variable ya definida: "+node.getName(), node.getStart());
+			error("Already defined Variable: "+node.getName(), node.getStart());
 
 		node.setScope(param instanceof VarScope ? (VarScope) param : VarScope.GLOBAL);
 
@@ -53,7 +53,7 @@ public class Identification extends DefaultVisitor {
 	//	class StructDefinition { VarType name;  List<StructField> definitions; }
 	public Object visit(StructDefinition node, Object param) {
 		if(varsContextMap.getFromAny(node.getName().getType()) != null)
-			error("Estructura ya definida: " + node.getName().getType(),node.getStart());
+			error("Already defined Struct: " + node.getName().getType(),node.getStart());
 
 		varsContextMap.put(node.getName().getType(), node);
 		structsMap.put(node.getName().getType(), node);
@@ -69,7 +69,7 @@ public class Identification extends DefaultVisitor {
 	public Object visit(FunDefinition node, Object param) {
 
 		if(functionsMap.get(node.getName()) != null)
-			error("Función ya definida: " + node.getName(), node.getStart());
+			error("Already defined Function: " + node.getName(), node.getStart());
 		functionsMap.put(node.getName(), node);
 
 		varsContextMap.set();
@@ -86,7 +86,7 @@ public class Identification extends DefaultVisitor {
 		FunDefinition definition = functionsMap.get(node.getName());
 
 		if(definition == null)
-			error(node.getName(), node.getStart());
+			error("Undefined function: " + node.getName(), node.getStart());
 
 		node.setFuncDefinition(definition);
 
@@ -99,7 +99,7 @@ public class Identification extends DefaultVisitor {
 		Definition definition = varsContextMap.getFromAny(node.getName());
 
 		if(definition == null)
-			error("Variable no definida: " + node.getName(), node.getStart());
+			error("Undefined Variable: " + node.getName(), node.getStart());
 
 		node.setVarDefinition((VarDefinition) definition);
 
@@ -113,7 +113,7 @@ public class Identification extends DefaultVisitor {
 
 		StructDefinition definition = structsMap.get(node.getType());
 		if(definition == null)
-			error("Struct no definido: " + node.getType(), node.getStart());
+			error("Undefined Struct: " + node.getType(), node.getStart());
 
 		node.setStructDefinition(definition);
 

@@ -25,7 +25,17 @@ public class TypeChecking extends DefaultVisitor {
     // public Object visit(Program prog, Object param) {
     //      ...
     // }
-    
+
+	//	class FunDefinition { String name;  List<Definition> params;  Type return_t;  List<VarDefinition> definitions;  List<Sentence> sentences; }
+	public Object visit(FunDefinition node, Object param) {
+
+		super.visit(node, param);
+
+		predicado(tipoSimple(node.getReturn_t()), "El retorno de una función debe ser un tipo simple", node);
+
+		return null;
+	}
+
 	//	class Read { Expression expression; }
 	public Object visit(Read node, Object param) {
 
@@ -49,6 +59,13 @@ public class TypeChecking extends DefaultVisitor {
 
     // # ----------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------
+
+    private boolean tipoSimple(Type tipo) {
+        if (tipo instanceof CharType) return true;
+        if (tipo instanceof IntType) return true;
+        if (tipo instanceof RealType) return true;
+        return false;
+    }
 
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se quiere usar.

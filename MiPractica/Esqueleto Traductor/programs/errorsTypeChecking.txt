@@ -87,10 +87,10 @@ main() {
 	print 2.5 < 2;		// Deben ser del mismo tipo
 	print i == 2;
 	
-	print cast<int>(2.5) + i;
-	print cast<Persona>(2.5);	// Tipos simples
-	print cast<int>(juan);		// Expresiones de tipos simples
-	print cast<float>(2.5);		// Deben ser distintos tipos
+	print <int>(2.5) + i;
+	print <Persona>(2.5);	// Tipos simples
+	print <int>(juan);		// Expresiones de tipos simples
+	print <float>(2.5);		// Deben ser distintos tipos
 	
 	print juan[5];	// Debe ser tipo array
 	print 2[5];	// Debe ser tipo array
