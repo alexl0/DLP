@@ -17,23 +17,24 @@ public class FuncInvocation extends AbstractSentence {
 		this.name = name;
 		this.params = params;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(params);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(params);
 	}
 
 	public FuncInvocation(Object name, Object params) {
-		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 		this.params = this.<Expression>getAstFromContexts(params);
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(name, params);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(name, params);
 	}
 
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -41,12 +42,13 @@ public class FuncInvocation extends AbstractSentence {
 	public List<Expression> getParams() {
 		return params;
 	}
+
 	public void setParams(List<Expression> params) {
 		this.params = params;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
@@ -54,11 +56,20 @@ public class FuncInvocation extends AbstractSentence {
 	private List<Expression> params;
 
 	public String toString() {
-       return "{name:" + getName() + ", params:" + getParams() + "}";
-   }
-	
-	//Añadido
-    private FunDefinition funcDefinition;
+		return "{name:" + getName() + ", params:" + getParams() + "}";
+	}
+
+	public List<Expression> getArguments() {
+		return arguments;
+	}
+
+	public void setArguments(List<Expression> arguments) {
+		this.arguments = arguments;
+	}
+
+	// Añadido
+	private FunDefinition funcDefinition;
+	private List<Expression> arguments;
 
 	public FunDefinition getFuncDefinition() {
 		return funcDefinition;

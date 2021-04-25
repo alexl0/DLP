@@ -13,7 +13,7 @@ import visitor.*;
 
 public class FunDefinition extends AbstractDefinition {
 
-	public FunDefinition(String name, List<Definition> params, Type return_t, List<VarDefinition> definitions, List<Sentence> sentences) {
+	public FunDefinition(String name, List<VarDefinition> params, Type return_t, List<VarDefinition> definitions, List<Sentence> sentences) {
 		this.name = name;
 		this.params = params;
 		this.return_t = return_t;
@@ -27,7 +27,7 @@ public class FunDefinition extends AbstractDefinition {
 
 	public FunDefinition(Object name, Object params, Object return_t, Object definitions, Object sentences) {
 		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
-		this.params = this.<Definition>getAstFromContexts(params);
+		this.params = this.<VarDefinition>getAstFromContexts(params);
 		this.return_t = (Type) getAST(return_t);
 		this.definitions = this.<VarDefinition>getAstFromContexts(definitions);
 		this.sentences = this.<Sentence>getAstFromContexts(sentences);
@@ -44,10 +44,10 @@ public class FunDefinition extends AbstractDefinition {
 		this.name = name;
 	}
 
-	public List<Definition> getParams() {
+	public List<VarDefinition> getParams() {
 		return params;
 	}
-	public void setParams(List<Definition> params) {
+	public void setParams(List<VarDefinition> params) {
 		this.params = params;
 	}
 
@@ -77,11 +77,20 @@ public class FunDefinition extends AbstractDefinition {
 		return v.visit(this, param);
 	}
 
+    public void setReturn(boolean returnsSomething) {
+        this.returnsSomething = returnsSomething;
+    }
+
+    public boolean hasReturn() {
+        return returnsSomething;
+    }
+
 	private String name;
-	private List<Definition> params;
+	private List<VarDefinition> params;
 	private Type return_t;
 	private List<VarDefinition> definitions;
 	private List<Sentence> sentences;
+    private boolean returnsSomething;
 
 	public String toString() {
        return "{name:" + getName() + ", params:" + getParams() + ", return_t:" + getReturn_t() + ", definitions:" + getDefinitions() + ", sentences:" + getSentences() + "}";
