@@ -6,4 +6,9 @@ package ast;
 
 public interface Expression extends AST {
 
+    boolean isModificable();
+    void setModificable(boolean modificable);
+    Type getType();
+    void setType(Type type);
+
 }

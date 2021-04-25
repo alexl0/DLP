@@ -1,5 +1,5 @@
 /*
-Este ejemplo tiene varios errores sem�nticos que el compilador debe detectar en la
+Este ejemplo tiene varios errores semanticos que el compilador debe detectar en la
 fase de identificacion y otros que no deben ser detectados aun.
 
 NOTA: Es posible que el alumno deba adaptar ligeramente la sintaxis del lenguaje si no coincide

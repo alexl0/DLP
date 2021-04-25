@@ -49,7 +49,7 @@ public class TypeChecking extends DefaultVisitor {
 	//	class Variable { String name; }
 	public Object visit(Variable node, Object param) {
 		super.visit(node,  param);
-		node.setModoificable(true);
+		node.setModificable(true);
 		return null;
 	}
 

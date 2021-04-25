@@ -16,23 +16,24 @@ public class StructField extends AbstractDefinition {
 		this.name = name;
 		this.type = type;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(type);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(type);
 	}
 
 	public StructField(Object name, Object type) {
-		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 		this.type = (Type) getAST(type);
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(name, type);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(name, type);
 	}
 
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -40,19 +41,29 @@ public class StructField extends AbstractDefinition {
 	public Type getType() {
 		return type;
 	}
+
 	public void setType(Type type) {
 		this.type = type;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
+	}
+
+	public Definition getDefinition() {
+		return structDefinition;
+	}
+
+	public void setDefinition(StructDefinition structDefinition) {
+		this.structDefinition = structDefinition;
 	}
 
 	private String name;
 	private Type type;
+	private StructDefinition structDefinition;
 
 	public String toString() {
-       return "{name:" + getName() + ", type:" + getType() + "}";
-   }
+		return "{name:" + getName() + ", type:" + getType() + "}";
+	}
 }
