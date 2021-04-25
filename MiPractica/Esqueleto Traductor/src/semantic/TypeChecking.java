@@ -33,7 +33,7 @@ public class TypeChecking extends DefaultVisitor {
 
         super.visit(node, param);
 
-        predicado(tipoSimple(node.getReturn_t()), "The return of a function must be a simple type", node);
+        predicado(isSimpleType(node.getReturn_t()), "The return of a function must be a simple type", node);
 
         return null;
     }
@@ -157,7 +157,7 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isPrimitive(node.getExpression().getType()),
+            predicado(isSimpleType(node.getExpression().getType()),
                     "The expression to be printed must be of simple type", node);
 
         return null;
@@ -168,7 +168,7 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isPrimitive(node.getExpression().getType()),
+            predicado(isSimpleType(node.getExpression().getType()),
                     "The expression to be printed must be of simple type", node);
 
         return null;
@@ -179,7 +179,7 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isPrimitive(node.getExpression().getType()),
+            predicado(isSimpleType(node.getExpression().getType()),
                     "The expression to be printed must be of simple type", node);
 
         return null;
@@ -261,12 +261,12 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(Assignment node, Object param) {
         super.visit(node, param);
 
-        predicado(isPrimitive(node.getLeft().getType()), "The expression " + node.getLeft() + " must be of simple type",
-                node);
+        predicado(isSimpleType(node.getLeft().getType()),
+                "The expression " + node.getLeft() + " must be of simple type", node);
 
         predicado(node.getLeft().isModificable(), "Cannot assign a value to " + node.getLeft(), node);
 
-        if (node.getLeft().isModificable() && isPrimitive(node.getLeft().getType())) {
+        if (node.getLeft().isModificable() && isSimpleType(node.getLeft().getType())) {
             predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
                     "Cannot assign the type " + node.getRight().getType() + " to " + node.getLeft().getType(), node);
         }
@@ -278,7 +278,7 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType() instanceof VoidType))
-            predicado(isPrimitive(node.getExpression().getType()), "The expression to return must be of simple type",
+            predicado(isSimpleType(node.getExpression().getType()), "The expression to return must be of simple type",
                     node);
 
         predicado(node.getFunDefinition().getReturn_t().getClass().equals(node.getExpression().getType().getClass()),
@@ -338,22 +338,41 @@ public class TypeChecking extends DefaultVisitor {
         return null;
     }
 
-	//	class CastExpression { Type type;  Expression expr; }
-	public Object visit(CastExpression node, Object param) {
+    // class CastExpression { Type type; Expression expr; }
+    public Object visit(CastExpression node, Object param) {
         super.visit(node, param);
 
-        predicado(!(mismoTipo(node.getCastType(), node.getExpr().getType().getClass())),
+        predicado(!(node.getCastingType().getClass().equals(node.getExpr().getType().getClass())),
                 "The type of the expression must be different from the type of the cast", node);
 
-        predicado(isPrimitive(node.getExpr().getType()), "The expression to cast must be of simple type", node);
+        predicado(isSimpleType(node.getExpr().getType()), "The expression to cast must be of simple type", node);
 
-        predicado(isPrimitive(node.getCastType()), "The type of the cast must be of simple type", node);
+        predicado(isSimpleType(node.getCastingType()), "The type of the cast must be of simple type", node);
 
-        node.setType(node.getCastType());
+        node.setType(node.getCastingType());
         node.setModificable(false);
 
-		return null;
-	}
+        return null;
+    }
+
+    // class ComparableExpression { Expression left; String operator; Expression
+    // right; }
+    public Object visit(ComparableExpression node, Object param) {
+        super.visit(node, param);
+
+        predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
+                "The operands must be of the same type", node);
+
+        predicado(
+                node.getLeft().getType().getClass().equals(IntType.class)
+                        || node.getLeft().getType().getClass().equals(RealType.class),
+                "The operands must be of type integer or real", node);
+
+        node.setType(new IntType());
+        node.setModificable(false);
+
+        return null;
+    }
 
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se
@@ -396,13 +415,7 @@ public class TypeChecking extends DefaultVisitor {
 
     private ErrorManager errorManager;
 
-    // TODO borrar
-    private boolean isPrimitive(Type type) {
-        return (new CharType().getClass().equals(type.getClass()) || new IntType().getClass().getClass().equals(type)
-                || new RealType().getClass().getClass().equals(type));
-    }
-
-    private boolean tipoSimple(Type tipo) {
+    private boolean isSimpleType(Type tipo) {
         if (tipo instanceof CharType)
             return true;
         if (tipo instanceof IntType)

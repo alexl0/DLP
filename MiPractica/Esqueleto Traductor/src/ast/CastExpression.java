@@ -13,7 +13,7 @@ import visitor.*;
 public class CastExpression extends AbstractExpression {
 
 	public CastExpression(Type type, Expression expr) {
-		this.type = type;
+		this.castingType = type;
 		this.expr = expr;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -22,7 +22,7 @@ public class CastExpression extends AbstractExpression {
 	}
 
 	public CastExpression(Object type, Object expr) {
-		this.type = (Type) getAST(type);
+		this.castingType = (Type) getAST(type);
 		this.expr = (Expression) getAST(expr);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -30,11 +30,11 @@ public class CastExpression extends AbstractExpression {
        setPositions(type, expr);
 	}
 
-	public Type getType() {
-		return type;
+	public Type getCastingType() {
+		return castingType;
 	}
-	public void setType(Type type) {
-		this.type = type;
+	public void setCastingType(Type castingType) {
+		this.castingType = castingType;
 	}
 
 	public Expression getExpr() {
@@ -49,7 +49,7 @@ public class CastExpression extends AbstractExpression {
 		return v.visit(this, param);
 	}
 
-	private Type type;
+	private Type castingType;
 	private Expression expr;
 
 	public String toString() {
