@@ -13,6 +13,10 @@ import visitor.*;
 
 public class FuncInvocation extends AbstractSentence {
 
+	private String name;
+	private List<Expression> params;
+	private List<Expression> arguments;
+	
 	public FuncInvocation(String name, List<Expression> params) {
 		this.name = name;
 		this.params = params;
@@ -47,18 +51,6 @@ public class FuncInvocation extends AbstractSentence {
 		this.params = params;
 	}
 
-	@Override
-	public Object accept(Visitor v, Object param) {
-		return v.visit(this, param);
-	}
-
-	private String name;
-	private List<Expression> params;
-
-	public String toString() {
-		return "{name:" + getName() + ", params:" + getParams() + "}";
-	}
-
 	public List<Expression> getArguments() {
 		return arguments;
 	}
@@ -67,16 +59,14 @@ public class FuncInvocation extends AbstractSentence {
 		this.arguments = arguments;
 	}
 
-	// Añadido
-	private FunDefinition funcDefinition;
-	private List<Expression> arguments;
-
-	public FunDefinition getFuncDefinition() {
-		return funcDefinition;
+	@Override
+	public Object accept(Visitor v, Object param) {
+		return v.visit(this, param);
 	}
 
-	public void setFuncDefinition(FunDefinition funcDefinition) {
-		this.funcDefinition = funcDefinition;
+	public String toString() {
+		return "{name:" + getName() + ", params:" + getParams() + "}";
 	}
+
 
 }

@@ -11,6 +11,8 @@ import visitor.*;
 
 public class TypeChecking extends DefaultVisitor {
 
+    private ErrorManager errorManager;
+
     public TypeChecking(ErrorManager errorManager) {
         this.errorManager = errorManager;
     }
@@ -32,9 +34,16 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(FunDefinition node, Object param) {
 
         super.visit(node, param);
+        for (VarDefinition def : node.getParams())
+            predicado(isSimpleType(def.getType()),
+                    "The type of the parameters"+ ": " + node.getName() + " must be of simple type", node);
 
-        predicado(isSimpleType(node.getReturn_t()), "The return of a function must be a simple type", node);
-
+        if (!VoidType.class
+                .equals(node.getReturn_t().getClass())) {
+            predicado(isSimpleType(node.getReturn_t()),
+                    "The return type of " + node.getName() + " must be of simple type", node);
+            predicado(node.hasReturn(), "The function must return a value of type" + node.getReturn_t(), node);
+        }
         return null;
     }
 
@@ -190,7 +199,7 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(LogicalExpression node, Object param) {
         super.visit(node, param);
 
-        predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass())),
+        predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
                 "The operands must be of the same type", node);
 
         predicado((node.getLeft().getType().getClass().equals(IntType.class)), "Operands must be of type integer", node);
@@ -412,8 +421,6 @@ public class TypeChecking extends DefaultVisitor {
     private void predicado(boolean condition, String errorMessage) {
         predicado(condition, errorMessage, (Position) null);
     }
-
-    private ErrorManager errorManager;
 
     private boolean isSimpleType(Type tipo) {
         if (tipo instanceof CharType)

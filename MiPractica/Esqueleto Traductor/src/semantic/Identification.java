@@ -58,7 +58,8 @@ public class Identification extends DefaultVisitor {
 		structsMap.put(node.getName().getType(), node);
 
 		varsContextMap.set();
-		super.visit(node, param);
+        for (StructField d : node.getDefinitions())
+            d.accept(this, node);
 		varsContextMap.reset();
 
 		return null;
@@ -73,7 +74,13 @@ public class Identification extends DefaultVisitor {
 		functionsMap.put(node.getName(), node);
 
 		varsContextMap.set();
-		super.visit(node, param);
+        for (VarDefinition p : node.getParams())
+            p.accept(this, VarScope.PARAM);
+        for (VarDefinition d : node.getDefinitions())
+            d.accept(this, VarScope.LOCAL);
+        for (Sentence s : node.getSentences())
+            s.accept(this, node);
+        node.getReturn_t().accept(this, param);
 		varsContextMap.reset();
 
 		return null;
@@ -88,7 +95,7 @@ public class Identification extends DefaultVisitor {
 		if (definition == null)
 			error("Undefined procedure: " + node.getName(), node.getStart());
 
-		node.setFuncDefinition(definition);
+		node.setFunDefinition(definition);
 
 		return null;
 	}
@@ -150,6 +157,93 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	// class Read { Expression expression; }
+	public Object visit(Read node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		if (node.getExpression() instanceof Variable) {
+			Definition definition = varsContextMap.getFromAny(((Variable) node.getExpression()).getName());
+			predicado(definition != null, "Variable no definida: " + ((Variable) node.getExpression()).getName(), node);
+			node.setVarDefinition((VarDefinition) definition);
+		}
+
+		return null;
+	}
+
+	// class Assignment { Expression left; Expression right; }
+	public Object visit(Assignment node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class IfElse { Expression expression; List<Sentence> if_s; List<Sentence>
+	// else_s; }
+	public Object visit(IfElse node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class While { Expression expression; List<Sentence> sentence; }
+	public Object visit(While node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class Println { Expression expression; }
+	public Object visit(Println node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class Print { Expression expression; }
+	public Object visit(Print node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class Printsp { Expression expression; }
+	public Object visit(Printsp node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
+	// class Return { Expression expression; }
+	public Object visit(Return node, Object param) {
+		super.visit(node, param);
+
+		if (param instanceof FunDefinition)
+			node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
 	// # --------------------------------------------------------
 	// Métodos auxiliares recomendados (opcionales) -------------
 	@SuppressWarnings("unused")
@@ -159,6 +253,19 @@ public class Identification extends DefaultVisitor {
 
 	private void error(String msg, Position position) {
 		errorManager.notify("Identification", msg, position);
+	}
+
+	private void predicado(boolean condition, String errorMessage, AST node) {
+		predicado(condition, errorMessage, node.getStart());
+	}
+
+	private void predicado(boolean condition, String errorMessage, Position position) {
+		if (!condition)
+			errorManager.notify("Type Checking", errorMessage, position);
+	}
+
+	private void predicado(boolean condition, String errorMessage) {
+		predicado(condition, errorMessage, (Position) null);
 	}
 
 	private ErrorManager errorManager;
