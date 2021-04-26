@@ -36,10 +36,9 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
         for (VarDefinition def : node.getParams())
             predicado(isSimpleType(def.getType()),
-                    "The type of the parameters"+ ": " + node.getName() + " must be of simple type", node);
+                    "The type of the parameters" + ": " + node.getName() + " must be of simple type", node);
 
-        if (!VoidType.class
-                .equals(node.getReturn_t().getClass())) {
+        if (!VoidType.class.equals(node.getReturn_t().getClass())) {
             predicado(isSimpleType(node.getReturn_t()),
                     "The return type of " + node.getName() + " must be of simple type", node);
             predicado(node.hasReturn(), "The function must return a value of type" + node.getReturn_t(), node);
@@ -52,7 +51,12 @@ public class TypeChecking extends DefaultVisitor {
 
         super.visit(node, param);
 
-        predicado(node.getExpression().isModificable(), "The expression is not modifiable ", node);
+        if (!(ErrorType.class).equals(node.getExpression().getType().getClass())) {
+            predicado(isSimpleType(node.getExpression().getType()), "La expresión a leer debe ser de tipo simple",
+                    node);
+
+            predicado(node.getExpression().isModificable(), "La expresión a leer debe ser modificable", node);
+        }
 
         return null;
     }
@@ -202,13 +206,14 @@ public class TypeChecking extends DefaultVisitor {
         predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
                 "The operands must be of the same type", node);
 
-        predicado((node.getLeft().getType().getClass().equals(IntType.class)), "Operands must be of type integer", node);
+        predicado((node.getLeft().getType().getClass().equals(IntType.class)), "Operands must be of type integer",
+                node);
 
         node.setType(new IntType());
         node.setModificable(false);
 
-		return null;
-	}
+        return null;
+    }
 
     // class UnaryExpression { String operator; Expression expr; }
     public Object visit(UnaryExpression node, Object param) {
