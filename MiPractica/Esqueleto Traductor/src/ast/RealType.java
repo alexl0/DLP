@@ -10,13 +10,18 @@ import visitor.*;
 
 public class RealType extends AbstractType {
 
+	private int memorySize = 4;
+
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{RealType}";
-   }
+		return "{RealType}";
+	}
+
+	public int getSize() {
+		return memorySize;
+	}
 }

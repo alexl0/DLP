@@ -10,13 +10,18 @@ import visitor.*;
 
 public class IntType extends AbstractType {
 
+	private int memorySize = 2;
+
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{IntType}";
-   }
+		return "{IntType}";
+	}
+
+	public int getSize() {
+		return memorySize;
+	}
 }

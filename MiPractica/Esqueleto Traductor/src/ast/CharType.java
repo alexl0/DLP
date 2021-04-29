@@ -10,13 +10,19 @@ import visitor.*;
 
 public class CharType extends AbstractType {
 
+	private int memorySize = 1;
+
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{CharType}";
-   }
+		return "{CharType}";
+	}
+
+	@Override
+	public int getSize() {
+		return memorySize;
+	}
 }

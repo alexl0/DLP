@@ -112,6 +112,9 @@ public class ASTPrinter extends DefaultVisitor {
 
 		print(indent + 1, "name", "String", node.getName());
 		visit(indent + 1, "type", "Type",node.getType());
+		
+		//Added manually
+		print(indent + 1, "address", "int", node.getAddress());
 		return null;
 	}
 
@@ -201,7 +204,7 @@ public class ASTPrinter extends DefaultVisitor {
 
 		printName(indent, "ArrayType", node, false);
 
-		visit(indent + 1, "size", "IntConstant",node.getSize());
+		visit(indent + 1, "size", "IntConstant",node.getSizeNumberOfElements());
 		visit(indent + 1, "type", "Type",node.getType());
 		return null;
 	}

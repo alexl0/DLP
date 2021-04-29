@@ -159,7 +159,7 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(ArrayType node, Object param) {
         super.visit(node, param);
 
-        predicado(Integer.parseInt(node.getSize().getValue()) > 0, "The size of the array must be greater than zero",
+        predicado(Integer.parseInt(node.getSizeNumberOfElements().getValue()) > 0, "The size of the array must be greater than zero",
                 node);
 
         return null;

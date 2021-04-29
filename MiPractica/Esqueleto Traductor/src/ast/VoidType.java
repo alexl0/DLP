@@ -10,13 +10,19 @@ import visitor.*;
 
 public class VoidType extends AbstractType {
 
+	private int memorySize = 0;
+
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{VoidType}";
-   }
+		return "{VoidType}";
+	}
+
+	@Override
+	public int getSize() {
+		return memorySize;
+	}
 }

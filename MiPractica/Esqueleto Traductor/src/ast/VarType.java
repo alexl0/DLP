@@ -27,11 +27,6 @@ public class VarType extends AbstractType {
 		setPositions(type);
 	}
 
-	@Override
-	public Object accept(Visitor v, Object param) {
-		return v.visit(this, param);
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -48,10 +43,6 @@ public class VarType extends AbstractType {
 		this.structDefinition = structDefinition;
 	}
 
-	public String toString() {
-		return "{type:" + getType() + "}";
-	}
-
 	public StructField getField(String nameOfField) {
 		for (StructField field : structDefinition.getDefinitions()) {
 			if (nameOfField.equals(field.getName())) {
@@ -60,5 +51,23 @@ public class VarType extends AbstractType {
 		}
 
 		return null;
+	}
+
+	public String toString() {
+		return "{type:" + getType() + "}";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object param) {
+		return v.visit(this, param);
+	}
+
+	@Override
+	public int getSize() {
+		int size = 0;
+		for (StructField child : structDefinition.getDefinitions())
+			size = size + child.getType().getSize();
+
+		return size;
 	}
 }
