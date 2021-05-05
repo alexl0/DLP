@@ -3,13 +3,13 @@ package semantic;
 import java.util.*;
 
 /*
-* Implementaci�n de una tabla Hash con contextos.
+* Implementacion de una tabla Hash con contextos.
 * Permite:
-* - Insertar s�mbolos (put) en el contexto actual.
+* - Insertar simbolos (put) en el contexto actual.
 * - Buscar tanto en el contexto actual (getFromTop) como en todos los contextos (getFromAny).
 * - Crear y destruir contextos mediante las operaciones set y reset.
 *
-* La forma habitual de instanciarla ser�:
+* La forma habitual de instanciarla sera:
 * 	ContextMap<String, DefinicionVariable> variables = new ContextMap<String, DefinicionVariable>();
 *
 */

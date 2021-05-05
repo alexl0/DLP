@@ -9,7 +9,7 @@ Por ejemplo:
 
 	print juan + anton;	// suma de dos estructuras 
 
-Lo anterior produce el error de que se estan sumando dos expresiones de tipos no simples y adem�s
+Lo anterior produce el error de que se estan sumando dos expresiones de tipos no simples y ademas
 puede producir el error de que la expresion a imprimir tampoco es de tipo simple (al no quedar
 un tipo simple asociado a la suma al no haberse podido calcular su tipo).
 Estos errores derivados son normales y no es necesario intentar suprimirlos. 
