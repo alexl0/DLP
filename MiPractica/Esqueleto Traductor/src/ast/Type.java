@@ -6,4 +6,6 @@ package ast;
 
 public interface Type extends AST {
     public int getSize();
+	public String getMAPLName();
+    public char getSuffix();
 }

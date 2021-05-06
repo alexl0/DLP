@@ -25,4 +25,14 @@ public class VoidType extends AbstractType {
 	public int getSize() {
 		return memorySize;
 	}
+
+	@Override
+	public String getMAPLName() {
+        return "void";
+	}
+
+	@Override
+	public char getSuffix() {
+        return ' ';
+	}
 }

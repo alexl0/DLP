@@ -78,4 +78,14 @@ public class ArrayType extends AbstractType {
 		memorySize = Integer.parseInt(sizeNumberOfElements.getValue()) * type.getSize();
 	}
 
+	@Override
+	public String getMAPLName() {
+        return sizeNumberOfElements.getValue() + "*" + type.getMAPLName();
+	}
+
+	@Override
+	public char getSuffix() {
+        return ' ';
+	}
+
 }

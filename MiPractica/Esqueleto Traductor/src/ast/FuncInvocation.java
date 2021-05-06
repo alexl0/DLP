@@ -15,7 +15,6 @@ public class FuncInvocation extends AbstractSentence {
 
 	private String name;
 	private List<Expression> params;
-	private List<Expression> arguments;
 	
 	public FuncInvocation(String name, List<Expression> params) {
 		this.name = name;
@@ -49,14 +48,6 @@ public class FuncInvocation extends AbstractSentence {
 
 	public void setParams(List<Expression> params) {
 		this.params = params;
-	}
-
-	public List<Expression> getArguments() {
-		return arguments;
-	}
-
-	public void setArguments(List<Expression> arguments) {
-		this.arguments = arguments;
 	}
 
 	@Override
