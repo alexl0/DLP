@@ -388,28 +388,6 @@ public class TypeChecking extends DefaultVisitor {
         return null;
     }
 
-    	//	class OperadorTernario { Expression condicion;  Expression valorVerdadero;  Expression valorFalso; }
-	public Object visit(OperadorTernario node, Object param) {
-
-		super.visit(node, param);
-        predicado(node.getCondicion().getType().getClass().equals(IntType.class), "La condicion debe ser de tipo entero", node);
-        predicado(node.getValorFalso().getType().getClass().equals(node.getValorVerdadero().getType().getClass()), "El tipo de ValorVerdadero debe ser igual que el de ValorFalso",node);
-
-        node.setModificable(false);
-        node.setType(node.getValorFalso().getType());
-/*
-		if (node.getCondicion() != null)
-			node.getCondicion().accept(this, param);
-
-		if (node.getValorVerdadero() != null)
-			node.getValorVerdadero().accept(this, param);
-
-		if (node.getValorFalso() != null)
-			node.getValorFalso().accept(this, param);
-*/
-		return null;
-	}
-
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se
      * quiere usar.

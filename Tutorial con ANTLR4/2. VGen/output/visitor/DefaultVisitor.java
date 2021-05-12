@@ -248,17 +248,6 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class OperadorTernario { Expression condicion;  Expression valorVerdadero;  Expression valorFalso; }
-	public Object visit(OperadorTernario node, Object param) {
-		if (node.getCondicion() != null)
-			node.getCondicion().accept(this, param);
-		if (node.getValorVerdadero() != null)
-			node.getValorVerdadero().accept(this, param);
-		if (node.getValorFalso() != null)
-			node.getValorFalso().accept(this, param);
-		return null;
-	}
-
     // Método auxiliar -----------------------------
     protected void visitChildren(List<? extends AST> children, Object param) {
         if (children != null)

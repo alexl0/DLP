@@ -22,7 +22,6 @@ public class CodeSelection extends DefaultVisitor {
     private Map<String, String> instruction = new HashMap<String, String>();
     private int ifCount = 0;
     private int whileCount = 0;
-    private int operadorBinarioCount = 0;
 
     public CodeSelection(Writer writer, String sourceFile) {
         this.writer = new PrintWriter(writer);
@@ -327,32 +326,6 @@ public class CodeSelection extends DefaultVisitor {
         }
         return null;
     }
-
-    /*
-    valor((node.getCondicion())) en el resto de expresiones las visitaba para obtener valer o direccion
-    jz valor_falsO:
-    valor((node.getValorVerdadero()))
-    jmp fin
-    valor_falso:
-    valor((node.getValorFalso()))
-    fin:
-    */
-	//	class OperadorTernario { Expression condicion;  Expression valorVerdadero;  Expression valorFalso; }
-	public Object visit(OperadorTernario node, Object param) {
-        line(node);
-        
-        int n = operadorBinarioCount++;
-
-        node.getCondicion().accept(this, param);
-        out("jz valor_falso"+n);
-        node.getValorVerdadero().accept(this, param);
-        out("jmp fin"+n);
-        out("valor_falso"+n+":");
-        node.getValorFalso().accept(this, param);
-        out("fin"+n+":");
-
-		return null;
-	}
 
     // # ----------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------
