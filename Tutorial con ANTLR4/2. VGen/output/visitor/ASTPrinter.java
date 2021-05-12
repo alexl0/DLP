@@ -442,6 +442,18 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	//	class OperadorTernario { Expression condicion;  Expression valorVerdadero;  Expression valorFalso; }
+	public Object visit(OperadorTernario node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "OperadorTernario", node, false);
+
+		visit(indent + 1, "condicion", "Expression",node.getCondicion());
+		visit(indent + 1, "valorVerdadero", "Expression",node.getValorVerdadero());
+		visit(indent + 1, "valorFalso", "Expression",node.getValorFalso());
+		return null;
+	}
+
 
 	// -----------------------------------------------------------------
 	// Métodos invocados desde los métodos visit -----------------------

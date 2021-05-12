@@ -61,6 +61,7 @@ expr returns[Expression ast]
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
 	| '\'' IDENT '\''
+	| e1=expr '?' e2=expr ':' e3=expr	{$ast = new OperadorTernario($e1.ast, $e2.ast, $e3.ast);}
 	;
 
 defVars returns[List<Definition> list = new ArrayList<Definition>();]

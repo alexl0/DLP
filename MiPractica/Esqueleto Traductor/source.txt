@@ -1,41 +1,19 @@
-/*
-Test para probar la Fase de Generacion de Codigo
-
-COMPROBACION: Al ejecutarlo la salida deberia ser la que indican los comentarios.
-
-CONSEJO: No limitarse a comprobar el resultado de la ejecucion. Se recomienda ademas abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
-Para facilitar esta tarea es de gran utilidad que el alumno haya generado directivas '#line' en el fichero de salida.
-Para informacion sobre la funcion de dicha directiva se debe abrir con GVM el siguiente tutorial: 
-Tutorial\3 Uso basico del depurador\4 Fusion Alto Nivel.txt
-
-NOTA: Es posible que el alumno deba cambiar ligeramente este ejemplo para que coincida con la sintaxis de la practica del alumno.
-*/
-
-var a:int;
-var b:float;
-
-struct Punto {
-	x:float;
-	y:float;
-};
-
-var v:[5]int;
-var p:Punto;
+f(a: int) {
+	println a;
+}
 
 main() {
-	a = 1111;
-	b = 2222.2;
-	v[3] = 3333;
-	p.y = 4444.4;
-		
-	printsp a;		// 1111
-	printsp b + p.y;	// 6666.6
-	println v[3];		// 3333
 
-	print a > 0 && b < 3333.3;	// 1
-	print <int>(b);			// 2222
+  var a: int;
+  var x: float;
+  
+  x = 0.0;
+  read a;
+  
+  println a > 0 ? 1 : 2;
+  f(a > 0 ? a + 1 : a - 1);
 
-	// Al final deberia salir
-	// 111 6666.6 3333
-	// 12222
+  // println x ? 0 : 1; // Error x no es entero
+  // println a > 0 ? x : 1; // Error x y 1 no son del mismo tipo (o hacer conversion implicita).
+
 }

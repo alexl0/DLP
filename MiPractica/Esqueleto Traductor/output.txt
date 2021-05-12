@@ -1,92 +1,89 @@
 #source "source.txt"
 call main
 halt
-#GLOBAL a:int
-#GLOBAL b:float
-#type Punto :{
-	x:float
-	y:float
-}
-#GLOBAL v:5*int
-#GLOBAL p:Punto
 
-#line 36
-main:
-#FUNC main
+#line 2
+f:
+#FUNC f
 #RET void
+#PARAM a:int
 enter 0
 
-#line 26
-pusha 0
-push 1111
-storei
-
-#line 27
-pusha 2
-pushf 2222.2
-storef
-
-#line 28
-pusha 6
-push 3
-push 2
-mul
-add
-push 3333
-storei
-
-#line 29
-pusha 16
+#line 2
+pusha BP
 push 4
-add
-pushf 4444.4
-storef
-
-#line 31
-pusha 0
-loadi
-outi
-pushb 32
-outb
-
-#line 32
-pusha 2
-loadf
-pusha 16
-push 4
-add
-loadf
-addf
-outf
-pushb 32
-outb
-
-#line 33
-pusha 6
-push 3
-push 2
-mul
 add
 loadi
 outi
 pushb 10
 outb
+ret 0,0,2
 
-#line 35
-pusha 0
+#line 14
+main:
+#FUNC main
+#RET void
+#LOCAL a:int
+#LOCAL x:float
+enter 6
+
+#line 10
+pusha BP
+push -6
+add
+pushf 0.0
+storef
+
+#line 11
+pusha BP
+push -2
+add
+ini
+storei
+
+#line 13
+
+#line 13
+pusha BP
+push -2
+add
 loadi
 push 0
 gti
-pusha 2
-loadf
-pushf 3333.3
-lti
-and
+jz valor_falso0
+push 1
+jmp fin0
+valor_falso0:
+push 2
+fin0:
 outi
+pushb 10
+outb
 
-#line 36
-pusha 2
-loadf
-f2i
-outi
-ret 0,0,0
+#line 14
+
+#line 14
+pusha BP
+push -2
+add
+loadi
+push 0
+gti
+jz valor_falso1
+pusha BP
+push -2
+add
+loadi
+push 1
+addi
+jmp fin1
+valor_falso1:
+pusha BP
+push -2
+add
+loadi
+push 1
+subi
+fin1:
+call f
+ret 0,6,0

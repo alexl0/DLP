@@ -397,4 +397,21 @@ public class <nombre clase> extends DefaultVisitor {
 
 		return null;
 	}
+
+	//	class OperadorTernario { Expression condicion;  Expression valorVerdadero;  Expression valorFalso; }
+	public Object visit(OperadorTernario node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getCondicion() != null)
+			node.getCondicion().accept(this, param);
+
+		if (node.getValorVerdadero() != null)
+			node.getValorVerdadero().accept(this, param);
+
+		if (node.getValorFalso() != null)
+			node.getValorFalso().accept(this, param);
+
+		return null;
+	}
 }

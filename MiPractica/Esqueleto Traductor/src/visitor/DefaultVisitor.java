@@ -259,4 +259,12 @@ public class DefaultVisitor implements Visitor {
 			for (AST child : children)
 				child.accept(this, param);
 	}
+
+	@Override
+	public Object visit(OperadorTernario node, Object param) {
+		node.getCondicion().accept(this, param);
+		node.getValorFalso().accept(this, param);
+		node.getValorVerdadero().accept(this, param);
+		return null;
+	}
 }
