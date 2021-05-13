@@ -35,8 +35,8 @@ inicia() {
 
 	i = 0;
 	while (i < 4) {
-		empresa[i].inicial = cast<char>(i + cast<int>('A'));
-		empresa[i].sueldo = cast<float>(1000 + (i * 100));
+		empresa[i].inicial = <char>(i + <int>('A'));
+		empresa[i].sueldo = <float>(1000 + (i * 100));
 		i = i + 1;
 	}  
 }
