@@ -1,113 +1,92 @@
 #source "source.txt"
 call main
 halt
+#GLOBAL a:int
+#GLOBAL b:float
+#type Punto :{
+	x:float
+	y:float
+}
+#GLOBAL v:5*int
+#GLOBAL p:Punto
 
-#line 12
+#line 36
 main:
 #FUNC main
 #RET void
-#LOCAL a:int
-#LOCAL b:int
-#LOCAL x:float
-enter 8
+enter 0
 
-#line 6
-pusha BP
-push -2
-add
-push 1
+#line 26
+pusha 0
+push 1111
 storei
 
-#line 7
-pusha BP
-push -4
+#line 27
+pusha 2
+pushf 2222.2
+storef
+
+#line 28
+pusha 6
+push 3
+push 2
+mul
 add
-push 0
+push 3333
 storei
 
-#line 9
-pusha BP
-push -2
+#line 29
+pusha 16
+push 4
+add
+pushf 4444.4
+storef
+
+#line 31
+pusha 0
+loadi
+outi
+pushb 32
+outb
+
+#line 32
+pusha 2
+loadf
+pusha 16
+push 4
+add
+loadf
+addf
+outf
+pushb 32
+outb
+
+#line 33
+pusha 6
+push 3
+push 2
+mul
 add
 loadi
-pusha BP
-push -4
-add
-loadi
-not
-and
-pusha BP
-push -2
-add
-loadi
-not
-pusha BP
-push -4
-add
-loadi
-and
-or
 outi
 pushb 10
 outb
 
-#line 10
-pusha BP
-push -4
-add
+#line 35
+pusha 0
 loadi
 push 0
-not
+gti
+pusha 2
+loadf
+pushf 3333.3
+lti
 and
-pusha BP
-push -4
-add
-loadi
-not
-push 0
-and
-or
 outi
-pushb 10
-outb
 
-#line 11
-pusha BP
-push -2
-add
-loadi
-pusha BP
-push -2
-add
-loadi
-not
-and
-pusha BP
-push -2
-add
-loadi
-not
-pusha BP
-push -2
-add
-loadi
-and
-or
+#line 36
+pusha 2
+loadf
+f2i
 outi
-pushb 10
-outb
-
-#line 12
-push 0
-push 1
-not
-and
-push 0
-not
-push 1
-and
-or
-outi
-pushb 10
-outb
-ret 0,8,0
+ret 0,0,0
