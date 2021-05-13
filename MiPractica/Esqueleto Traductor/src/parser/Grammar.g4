@@ -59,6 +59,15 @@ expr returns[Expression ast]
 	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
 	| l=expr op=( '!=' | '==' | '>' | '<' | '>=' | '<=' ) r=expr	{ $ast = new ComparableExpression($l.ast,$op,$r.ast); }
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
+
+	//XOR se representa con ^
+	| l=expr '^' r=expr						{ $ast = 
+		new LogicalExpression(
+			new LogicalExpression($l.ast,"&&",new UnaryExpression("!",$r.ast)),
+				"||",
+			new LogicalExpression(new UnaryExpression("!",$l.ast),"&&",$r.ast)
+	); }
+
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
 	| '\'' IDENT '\''
 	;
