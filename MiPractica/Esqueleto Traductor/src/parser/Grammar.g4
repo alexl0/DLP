@@ -58,21 +58,6 @@ expr returns[Expression ast]
 	| '(' expr ')'							{ $ast = $expr.ast; }
 	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }
 	| l=expr op=( '!=' | '==' | '>' | '<' | '>=' | '<=' ) r=expr	{ $ast = new ComparableExpression($l.ast,$op,$r.ast); }
-
-	| exp1=expr '>>' exp2=expr '>>' exp3=expr	{ $ast = 
-		new LogicalExpression(
-			new ComparableExpression($exp1.ast,">",$exp2.ast),
-			"&&",
-			new ComparableExpression($exp2.ast,">",$exp3.ast)
-		); }
-
-	| exp1=expr '<<' exp2=expr '<<' exp3=expr	{ $ast = 
-		new LogicalExpression(
-			new ComparableExpression($exp1.ast,"<",$exp2.ast),
-			"&&",
-			new ComparableExpression($exp2.ast,"<",$exp3.ast)
-		); }
-
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
 	| '\'' IDENT '\''
