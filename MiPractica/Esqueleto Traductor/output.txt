@@ -1,92 +1,95 @@
 #source "source.txt"
 call main
 halt
-#GLOBAL a:int
-#GLOBAL b:float
-#type Punto :{
-	x:float
-	y:float
-}
-#GLOBAL v:5*int
-#GLOBAL p:Punto
 
-#line 36
+#line 11
 main:
 #FUNC main
 #RET void
-enter 0
+#LOCAL a:int
+enter 2
 
-#line 26
-pusha 0
-push 1111
+#line 3
+pusha BP
+push -2
+add
+push 1
 storei
 
-#line 27
-pusha 2
-pushf 2222.2
-storef
-
-#line 28
-pusha 6
-push 3
-push 2
-mul
+#line 4
+pusha BP
+push -2
 add
-push 3333
-storei
-
-#line 29
-pusha 16
-push 4
+pusha BP
+push -2
 add
-pushf 4444.4
-storef
-
-#line 31
-pusha 0
 loadi
-outi
-pushb 32
-outb
+push 0
+and
+storei
 
-#line 32
-pusha 2
-loadf
-pusha 16
-push 4
-add
-loadf
-addf
-outf
-pushb 32
-outb
-
-#line 33
-pusha 6
-push 3
-push 2
-mul
+#line 5
+pusha BP
+push -2
 add
 loadi
 outi
 pushb 10
 outb
 
-#line 35
-pusha 0
+#line 6
+pusha BP
+push -2
+add
+push 1
+storei
+
+#line 7
+pusha BP
+push -2
+add
+pusha BP
+push -2
+add
+loadi
+push 1
+and
+storei
+
+#line 8
+pusha BP
+push -2
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 9
+pusha BP
+push -2
+add
+push 1
+storei
+
+#line 10
+pusha BP
+push -2
+add
+pusha BP
+push -2
+add
 loadi
 push 0
-gti
-pusha 2
-loadf
-pushf 3333.3
-lti
-and
-outi
+or
+storei
 
-#line 36
-pusha 2
-loadf
-f2i
+#line 11
+pusha BP
+push -2
+add
+loadi
 outi
-ret 0,0,0
+pushb 10
+outb
+ret 0,2,0

@@ -36,6 +36,8 @@ sentencia returns [Sentence ast]
 	| defWhile					{$ast = $defWhile.ast;}
 	| defIf						{$ast = $defIf.ast;}
 	| l = expr '=' r = expr ';'	{$ast = new Assignment($l.ast, $r.ast);}
+	| l = expr '&&=' r = expr ';'	{$ast = new Assignment($l.ast, new LogicalExpression($l.ast,"&&",$r.ast));}
+	| l = expr '||=' r = expr ';'	{$ast = new Assignment($l.ast, new LogicalExpression($l.ast,"||",$r.ast));}
 	| 'return' expr ';'			{$ast = new Return($expr.ast);}
 	| 'return' ';'				{$ast = new Return(new VoidConstant());}
 	| IDENT '(' exprs ')' ';'	{$ast = new FuncInvocation($IDENT, $exprs.list);}
