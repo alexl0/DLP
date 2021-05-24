@@ -54,8 +54,6 @@ expr returns[Expression ast]
 	| e=expr '.' IDENT						{ $ast = new FieldAccessExpression($e.ast,$IDENT); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
-	| expr op='++'							{ $ast = new UnarySumExpression($op,$ctx.expr(0)); }
-
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| '(' expr ')'							{ $ast = $expr.ast; }
 	| '<' type '>' '(' expr ')'				{ $ast = new CastExpression($type.ast,$expr.ast); }

@@ -259,11 +259,4 @@ public class DefaultVisitor implements Visitor {
 			for (AST child : children)
 				child.accept(this, param);
 	}
-
-	//	class UnarySumExpression { String operator;  Expression expr; }
-	public Object visit(UnarySumExpression node, Object param) {
-		if (node.getExpr() != null)
-			node.getExpr().accept(this, param);
-		return null;
-	}
 }
