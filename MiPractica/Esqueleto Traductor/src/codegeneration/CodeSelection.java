@@ -82,7 +82,7 @@ public class CodeSelection extends DefaultVisitor {
     }
 
     public Object visit(FunDefinition node, Object param) {
-        line(node);
+        //line(node);
         out(node.getName() + ":");
         out("#FUNC " + node.getName());
         out("#RET " + node.getReturn_t().getMAPLName());
@@ -148,9 +148,34 @@ public class CodeSelection extends DefaultVisitor {
 
     public Object visit(Assignment node, Object param) {
         line(node);
-        node.getLeft().accept(this, CodeFunction.ADDRESS);
-        node.getRight().accept(this, CodeFunction.VALUE);
-        out("store", node.getLeft().getType());
+
+        //Si el tipo de la izquierda es un array
+        if(node.getLeft().getType().getClass().equals(ArrayType.class)){
+            for(int i=0;i<Integer.parseInt(((ArrayType) node.getRight().getType()).getSizeNumberOfElements().getValue());i++){
+                //Direccion del elemento i del array de la izquierda
+                node.getLeft().accept(this, CodeFunction.ADDRESS);
+                out("push " + i);
+                out("push " + ((ArrayType)node.getLeft().getType()).getType().getSize());
+                out("mul");
+                out("add");
+
+                //Valor del elemento i del vector de la derecha
+                node.getRight().accept(this, CodeFunction.ADDRESS);
+                out("push " + i);
+                out("push " + ((ArrayType)node.getRight().getType()).getType().getSize());
+                out("mul");
+                out("add");
+                out("load" + ((ArrayType)node.getRight().getType()).getType().getSuffix());
+
+                out("store" + ((ArrayType)node.getLeft().getType()).getType().getSuffix());
+            }
+        }
+        //Si el tipo de la izquierda NO es un array, se hace como siempre, normal
+        else{
+            node.getLeft().accept(this, CodeFunction.ADDRESS);
+            node.getRight().accept(this, CodeFunction.VALUE);
+            out("store", node.getLeft().getType());
+        }
         return null;
     }
 
