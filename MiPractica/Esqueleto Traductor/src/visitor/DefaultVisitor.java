@@ -122,13 +122,10 @@ public class DefaultVisitor implements Visitor {
 
 	// class Assignment { Expression left; Expression right; }
 	public Object visit(Assignment node, Object param) {
-        if(node.getLeft().size()==node.getRight().size())
-			for(int i=0;i<node.getLeft().size();i++){
-				if (node.getLeft().get(i) != null)
-					node.getLeft().get(i).accept(this, param);
-				if (node.getRight().get(i) != null)
-					node.getRight().get(i).accept(this, param);
-			}
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
 		return null;
 	}
 

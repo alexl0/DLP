@@ -292,7 +292,7 @@ public class GrammarParser extends Parser {
 			setState(61);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__8) | (1L << T__16) | (1L << T__17) | (1L << T__23) | (1L << T__24) | (1L << PRINT) | (1L << LITENT) | (1L << LITREAL) | (1L << LITCHAR) | (1L << IDENT) | (1L << ASSIGN) | (1L << OPEN_PAREN))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__8) | (1L << T__16) | (1L << T__17) | (1L << T__23) | (1L << T__24) | (1L << PRINT) | (1L << LITENT) | (1L << LITREAL) | (1L << LITCHAR) | (1L << IDENT) | (1L << OPEN_PAREN))) != 0)) {
 				{
 				{
 				setState(56);
@@ -322,12 +322,15 @@ public class GrammarParser extends Parser {
 		public ExprContext expr;
 		public DefWhileContext defWhile;
 		public DefIfContext defIf;
-		public ExprsContext l;
-		public ExprsContext r;
+		public ExprContext l;
+		public ExprContext r;
 		public Token IDENT;
 		public ExprsContext exprs;
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode SEMICOLON() { return getToken(GrammarParser.SEMICOLON, 0); }
 		public TerminalNode PRINT() { return getToken(GrammarParser.PRINT, 0); }
@@ -338,14 +341,11 @@ public class GrammarParser extends Parser {
 			return getRuleContext(DefIfContext.class,0);
 		}
 		public TerminalNode ASSIGN() { return getToken(GrammarParser.ASSIGN, 0); }
-		public List<ExprsContext> exprs() {
-			return getRuleContexts(ExprsContext.class);
-		}
-		public ExprsContext exprs(int i) {
-			return getRuleContext(ExprsContext.class,i);
-		}
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
 		public TerminalNode OPEN_PAREN() { return getToken(GrammarParser.OPEN_PAREN, 0); }
+		public ExprsContext exprs() {
+			return getRuleContext(ExprsContext.class,0);
+		}
 		public TerminalNode CLOSE_PAREN() { return getToken(GrammarParser.CLOSE_PAREN, 0); }
 		public SentenciaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -438,16 +438,14 @@ public class GrammarParser extends Parser {
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(93);
-				((SentenciaContext)_localctx).l = exprs();
+				((SentenciaContext)_localctx).l = expr(0);
 				setState(94);
 				match(ASSIGN);
 				setState(95);
-				((SentenciaContext)_localctx).r = exprs();
+				((SentenciaContext)_localctx).r = expr(0);
 				setState(96);
 				match(SEMICOLON);
-
-						((SentenciaContext)_localctx).ast =  new Assignment(((SentenciaContext)_localctx).l.list, ((SentenciaContext)_localctx).r.list);
-					
+				((SentenciaContext)_localctx).ast =  new Assignment(((SentenciaContext)_localctx).l.ast, ((SentenciaContext)_localctx).r.ast);
 				}
 				break;
 			case 9:
@@ -1605,20 +1603,20 @@ public class GrammarParser extends Parser {
 		"\3\2\2\2GH\7 \2\2HI\5\16\b\2IJ\7+\2\2JK\b\6\1\2Ku\3\2\2\2LM\7\4\2\2MN"+
 		"\5\16\b\2NO\7+\2\2OP\b\6\1\2Pu\3\2\2\2QR\7\5\2\2RS\5\16\b\2ST\7+\2\2T"+
 		"U\b\6\1\2Uu\3\2\2\2VW\7\5\2\2WX\7+\2\2Xu\b\6\1\2YZ\5\30\r\2Z[\b\6\1\2"+
-		"[u\3\2\2\2\\]\5\32\16\2]^\b\6\1\2^u\3\2\2\2_`\5\f\7\2`a\7,\2\2ab\5\f\7"+
-		"\2bc\7+\2\2cd\b\6\1\2du\3\2\2\2ef\7\6\2\2fg\5\16\b\2gh\7+\2\2hi\b\6\1"+
-		"\2iu\3\2\2\2jk\7\6\2\2kl\7+\2\2lu\b\6\1\2mn\7&\2\2no\7-\2\2op\5\f\7\2"+
-		"pq\7.\2\2qr\7+\2\2rs\b\6\1\2su\3\2\2\2tB\3\2\2\2tG\3\2\2\2tL\3\2\2\2t"+
-		"Q\3\2\2\2tV\3\2\2\2tY\3\2\2\2t\\\3\2\2\2t_\3\2\2\2te\3\2\2\2tj\3\2\2\2"+
-		"tm\3\2\2\2u\13\3\2\2\2vw\5\16\b\2wx\b\7\1\2xy\7\7\2\2y{\3\2\2\2zv\3\2"+
-		"\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\177\3\2\2\2~|\3\2\2\2\177\u0080\5"+
-		"\16\b\2\u0080\u0081\b\7\1\2\u0081\u0083\3\2\2\2\u0082|\3\2\2\2\u0082\u0083"+
-		"\3\2\2\2\u0083\r\3\2\2\2\u0084\u0085\b\b\1\2\u0085\u0086\7&\2\2\u0086"+
-		"\u00a8\b\b\1\2\u0087\u0088\7#\2\2\u0088\u00a8\b\b\1\2\u0089\u008a\7$\2"+
-		"\2\u008a\u00a8\b\b\1\2\u008b\u008c\7%\2\2\u008c\u00a8\b\b\1\2\u008d\u008e"+
-		"\7&\2\2\u008e\u008f\7-\2\2\u008f\u0090\5\f\7\2\u0090\u0091\7.\2\2\u0091"+
-		"\u0092\b\b\1\2\u0092\u00a8\3\2\2\2\u0093\u0094\7-\2\2\u0094\u0095\5\16"+
-		"\b\2\u0095\u0096\7.\2\2\u0096\u0097\b\b\1\2\u0097\u00a8\3\2\2\2\u0098"+
+		"[u\3\2\2\2\\]\5\32\16\2]^\b\6\1\2^u\3\2\2\2_`\5\16\b\2`a\7,\2\2ab\5\16"+
+		"\b\2bc\7+\2\2cd\b\6\1\2du\3\2\2\2ef\7\6\2\2fg\5\16\b\2gh\7+\2\2hi\b\6"+
+		"\1\2iu\3\2\2\2jk\7\6\2\2kl\7+\2\2lu\b\6\1\2mn\7&\2\2no\7-\2\2op\5\f\7"+
+		"\2pq\7.\2\2qr\7+\2\2rs\b\6\1\2su\3\2\2\2tB\3\2\2\2tG\3\2\2\2tL\3\2\2\2"+
+		"tQ\3\2\2\2tV\3\2\2\2tY\3\2\2\2t\\\3\2\2\2t_\3\2\2\2te\3\2\2\2tj\3\2\2"+
+		"\2tm\3\2\2\2u\13\3\2\2\2vw\5\16\b\2wx\b\7\1\2xy\7\7\2\2y{\3\2\2\2zv\3"+
+		"\2\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\177\3\2\2\2~|\3\2\2\2\177\u0080"+
+		"\5\16\b\2\u0080\u0081\b\7\1\2\u0081\u0083\3\2\2\2\u0082|\3\2\2\2\u0082"+
+		"\u0083\3\2\2\2\u0083\r\3\2\2\2\u0084\u0085\b\b\1\2\u0085\u0086\7&\2\2"+
+		"\u0086\u00a8\b\b\1\2\u0087\u0088\7#\2\2\u0088\u00a8\b\b\1\2\u0089\u008a"+
+		"\7$\2\2\u008a\u00a8\b\b\1\2\u008b\u008c\7%\2\2\u008c\u00a8\b\b\1\2\u008d"+
+		"\u008e\7&\2\2\u008e\u008f\7-\2\2\u008f\u0090\5\f\7\2\u0090\u0091\7.\2"+
+		"\2\u0091\u0092\b\b\1\2\u0092\u00a8\3\2\2\2\u0093\u0094\7-\2\2\u0094\u0095"+
+		"\5\16\b\2\u0095\u0096\7.\2\2\u0096\u0097\b\b\1\2\u0097\u00a8\3\2\2\2\u0098"+
 		"\u0099\7\13\2\2\u0099\u009a\5\34\17\2\u009a\u009b\7\f\2\2\u009b\u009c"+
 		"\7-\2\2\u009c\u009d\5\16\b\2\u009d\u009e\7.\2\2\u009e\u009f\b\b\1\2\u009f"+
 		"\u00a8\3\2\2\2\u00a0\u00a1\7\23\2\2\u00a1\u00a2\5\16\b\4\u00a2\u00a3\b"+
