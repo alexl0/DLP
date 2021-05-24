@@ -602,6 +602,17 @@ public class ASTPrinter extends DefaultVisitor {
 		}
 	}
 
+	//	class UnarySumExpression { String operator;  Expression expr; }
+	public Object visit(UnarySumExpression node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "UnarySumExpression", node, false);
+
+		print(indent + 1, "operator", "String", node.getOperator());
+		visit(indent + 1, "expr", "Expression",node.getExpr());
+		return null;
+	}
+
 
 	private List<String> sourceLines;
 	private static String ls = System.getProperty("line.separator");

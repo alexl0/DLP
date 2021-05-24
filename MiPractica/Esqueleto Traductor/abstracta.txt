@@ -36,6 +36,7 @@ funcInvocationExpression:expression -> name:string params:expression*;
 arithmeticExpression:expression -> left:expression operator:string right:expression;
 logicalExpression:expression -> left:expression operator:string right:expression;
 unaryExpression:expression -> operator:string expr:expression;
+unarySumExpression:expression -> operator:string expr:expression;
 comparableExpression:expression -> left:expression operator:string right:expression;
 castExpression:expression -> type:type expr:expression;
 fieldAccessExpression:expression -> expr:expression name:string;

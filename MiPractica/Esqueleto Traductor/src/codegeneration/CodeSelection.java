@@ -327,6 +327,18 @@ public class CodeSelection extends DefaultVisitor {
         return null;
     }
 
+    public Object visit(UnarySumExpression node, Object param) {
+        assert (param == CodeFunction.VALUE);
+        node.getExpr().accept(this, CodeFunction.VALUE);
+        node.getExpr().accept(this, CodeFunction.ADDRESS);
+        node.getExpr().accept(this, CodeFunction.VALUE);
+        out("push 1");
+        out("add");
+        out("store");
+        return null;
+    }
+        
+
     // # ----------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------
 

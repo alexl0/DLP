@@ -41,4 +41,5 @@ public interface Visitor {
 	public Object visit(CastExpression node, Object param);
 	public Object visit(FieldAccessExpression node, Object param);
 	public Object visit(IndexExpression node, Object param);
+	public Object visit(UnarySumExpression node, Object param);
 }
