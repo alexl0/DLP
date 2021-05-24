@@ -148,9 +148,12 @@ public class CodeSelection extends DefaultVisitor {
 
     public Object visit(Assignment node, Object param) {
         line(node);
-        node.getLeft().accept(this, CodeFunction.ADDRESS);
-        node.getRight().accept(this, CodeFunction.VALUE);
-        out("store", node.getLeft().getType());
+        if(node.getLeft().size()==node.getRight().size())
+            for(int i=0;i<node.getLeft().size();i++){
+                node.getLeft().get(i).accept(this, CodeFunction.ADDRESS);
+                node.getRight().get(i).accept(this, CodeFunction.VALUE);
+                out("store", node.getLeft().get(i).getType());
+            }
         return null;
     }
 

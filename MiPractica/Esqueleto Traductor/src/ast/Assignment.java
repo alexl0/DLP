@@ -4,6 +4,8 @@
 
 package ast;
 
+import java.util.List;
+
 import org.antlr.v4.runtime.*;
 
 import visitor.*;
@@ -12,7 +14,7 @@ import visitor.*;
 
 public class Assignment extends AbstractSentence {
 
-	public Assignment(Expression left, Expression right) {
+	public Assignment(List<Expression> left, List<Expression> right) {
 		this.left = left;
 		this.right = right;
 
@@ -22,25 +24,25 @@ public class Assignment extends AbstractSentence {
 	}
 
 	public Assignment(Object left, Object right) {
-		this.left = (Expression) getAST(left);
-		this.right = (Expression) getAST(right);
+		this.left = (List<Expression>) getAST(left);
+		this.right = (List<Expression>) getAST(right);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(left, right);
 	}
 
-	public Expression getLeft() {
+	public List<Expression> getLeft() {
 		return left;
 	}
-	public void setLeft(Expression left) {
+	public void setLeft(List<Expression> left) {
 		this.left = left;
 	}
 
-	public Expression getRight() {
+	public List<Expression> getRight() {
 		return right;
 	}
-	public void setRight(Expression right) {
+	public void setRight(List<Expression> right) {
 		this.right = right;
 	}
 
@@ -49,8 +51,8 @@ public class Assignment extends AbstractSentence {
 		return v.visit(this, param);
 	}
 
-	private Expression left;
-	private Expression right;
+	private List<Expression> left;
+	private List<Expression> right;
 
 	public String toString() {
        return "{left:" + getLeft() + ", right:" + getRight() + "}";

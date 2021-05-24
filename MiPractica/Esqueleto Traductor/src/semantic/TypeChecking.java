@@ -274,16 +274,21 @@ public class TypeChecking extends DefaultVisitor {
     // class Assignment { Expression left; Expression right; }
     public Object visit(Assignment node, Object param) {
         super.visit(node, param);
+        predicado(node.getLeft().size()==node.getRight().size(), "The expressions must be of the same length", node);
 
-        predicado(isSimpleType(node.getLeft().getType()),
-                "The expression " + node.getLeft() + " must be of simple type", node);
+        if(node.getLeft().size()==node.getRight().size())
+            for(int i=0;i<node.getLeft().size();i++){
+                predicado(isSimpleType(node.getLeft().get(i).getType()),
+                "The expression " + node.getLeft().get(i) + " must be of simple type", node);
 
-        predicado(node.getLeft().isModificable(), "Cannot assign a value to " + node.getLeft(), node);
+                predicado(node.getLeft().get(i).isModificable(), "Cannot assign a value to " + node.getLeft().get(i), node);
 
-        if (node.getLeft().isModificable() && isSimpleType(node.getLeft().getType())) {
-            predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
-                    "Cannot assign the type " + node.getRight().getType() + " to " + node.getLeft().getType(), node);
-        }
+                if (node.getLeft().get(i).isModificable() && isSimpleType(node.getLeft().get(i).getType())) {
+                    predicado(node.getLeft().get(i).getType().getClass().equals(node.getRight().get(i).getType().getClass()),
+                            "Cannot assign the type " + node.getRight().get(i).getType() + " to " + node.getLeft().get(i).getType(), node);
+                }
+            }
+
         return null;
     }
 
