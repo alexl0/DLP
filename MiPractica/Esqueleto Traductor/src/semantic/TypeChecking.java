@@ -170,7 +170,9 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isSimpleType(node.getExpression().getType()),
+            predicado(
+                isSimpleType(node.getExpression().getType())
+                        || node.getExpression().getType().getClass().equals(ArrayType.class),
                     "The expression to be printed must be of simple type", node);
 
         return null;
@@ -181,7 +183,9 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isSimpleType(node.getExpression().getType()),
+            predicado(
+                    isSimpleType(node.getExpression().getType())
+                            || node.getExpression().getType().getClass().equals(ArrayType.class),
                     "The expression to be printed must be of simple type", node);
 
         return null;
@@ -192,7 +196,9 @@ public class TypeChecking extends DefaultVisitor {
         super.visit(node, param);
 
         if (!(node.getExpression().getType().getClass().equals(ErrorType.class)))
-            predicado(isSimpleType(node.getExpression().getType()),
+            predicado(
+                isSimpleType(node.getExpression().getType())
+                        || node.getExpression().getType().getClass().equals(ArrayType.class),
                     "The expression to be printed must be of simple type", node);
 
         return null;

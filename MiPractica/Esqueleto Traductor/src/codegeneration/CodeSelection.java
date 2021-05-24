@@ -82,7 +82,7 @@ public class CodeSelection extends DefaultVisitor {
     }
 
     public Object visit(FunDefinition node, Object param) {
-        line(node);
+        //line(node);
         out(node.getName() + ":");
         out("#FUNC " + node.getName());
         out("#RET " + node.getReturn_t().getMAPLName());
@@ -115,8 +115,22 @@ public class CodeSelection extends DefaultVisitor {
 
     public Object visit(Print node, Object param) {
         line(node);
-        node.getExpression().accept(this, CodeFunction.VALUE);
-        out("out", node.getExpression().getType());
+        if(node.getExpression().getType().getClass().equals(ArrayType.class)){
+            for(int i=0;i<Integer.parseInt(((ArrayType)node.getExpression().getType()).getSizeNumberOfElements().getValue());i++){
+                // Direccion de la expresion
+                node.getExpression().accept(this, CodeFunction.ADDRESS);
+                // Apilar el valor de i por el que voy
+                out("push " + i);
+                out("push " + ((ArrayType)node.getExpression().getType()).getType().getSize());
+                out("mul");
+                out("add");
+                out("load" + ((ArrayType)node.getExpression().getType()).getType().getSuffix());
+                out("out" + ((ArrayType)node.getExpression().getType()).getType().getSuffix());
+            }
+        }else{
+            node.getExpression().accept(this, CodeFunction.VALUE);
+            out("out", node.getExpression().getType());
+        }
         return null;
     }
 
@@ -209,7 +223,7 @@ public class CodeSelection extends DefaultVisitor {
     }
 
     public Object visit(FuncInvocation node, Object param) {
-        line(node);
+        //line(node);
         visitChildren(node.getParams(), CodeFunction.VALUE);
         out("call " + node.getName());
         if (!(node.getFunDefinition().getReturn_t() instanceof VoidType))
