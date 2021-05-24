@@ -275,36 +275,14 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(Assignment node, Object param) {
         super.visit(node, param);
 
-        // Si son de tipo array
-        if (node.getLeft().getType().getClass().equals(ArrayType.class)) {
-            // Tienen que ser de mismo tipo: ambos arrays
-            if(!node.getRight().getType().getClass().equals(ArrayType.class))
-                errorManager.notify("Type Checking", "Only an array can be assigned to an array", node.getStart());
-            else{
-                // Tienen que tener la misma longitud
-                if(Integer.parseInt(((ArrayType) node.getLeft().getType()).getSizeNumberOfElements().getValue()) != Integer
-                .parseInt(((ArrayType) node.getRight().getType()).getSizeNumberOfElements().getValue()))
-                    errorManager.notify("Type Checking", "The two arrays must be of the same length", node.getStart());
-                else{
-                    // El tipo del array debe de ser el mismo (int, double, lo que sea pero lo mismo)
-                    if(!((ArrayType) node.getLeft().getType()).getType().getClass()
-                    .equals(((ArrayType) node.getRight().getType()).getType().getClass()))
-                        errorManager.notify("Type Checking", "The two arrays must be of the same type", node.getStart());
-                }
-            }
-        }
-        // Si no son de tipo array
-        else {
-            predicado(isSimpleType(node.getLeft().getType()),
-                    "The expression " + node.getLeft() + " must be of simple type", node);
+        predicado(isSimpleType(node.getLeft().getType()),
+                "The expression " + node.getLeft() + " must be of simple type", node);
 
-            predicado(node.getLeft().isModificable(), "Cannot assign a value to " + node.getLeft(), node);
+        predicado(node.getLeft().isModificable(), "Cannot assign a value to " + node.getLeft(), node);
 
-            if (node.getLeft().isModificable() && isSimpleType(node.getLeft().getType())) {
-                predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
-                        "Cannot assign the type " + node.getRight().getType() + " to " + node.getLeft().getType(),
-                        node);
-            }
+        if (node.getLeft().isModificable() && isSimpleType(node.getLeft().getType())) {
+            predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
+                    "Cannot assign the type " + node.getRight().getType() + " to " + node.getLeft().getType(), node);
         }
         return null;
     }
