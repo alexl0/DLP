@@ -301,8 +301,12 @@ public class CodeSelection extends DefaultVisitor {
         assert (param == CodeFunction.VALUE);
         node.getLeft().accept(this, CodeFunction.VALUE);
         node.getRight().accept(this, CodeFunction.VALUE);
-        String instr=instruction.get(node.getOperator());
-        out(instr, node.getType());
+
+        char sufix=node.getLeft().getType().getSuffix();
+        String instr = instruction.get(node.getOperator());
+        if(sufix == 'f')
+            instr += sufix;
+        out(instr);
 
         return null;
     }
@@ -330,8 +334,12 @@ public class CodeSelection extends DefaultVisitor {
         assert (param == CodeFunction.VALUE);
         node.getLeft().accept(this, CodeFunction.VALUE);
         node.getRight().accept(this, CodeFunction.VALUE);
-        String instr=instruction.get(node.getOperator());
-        out(instr, node.getType());
+
+        char sufix=node.getLeft().getType().getSuffix();
+        String instr = instruction.get(node.getOperator());
+        if(sufix == 'b' || sufix == 'f')
+            instr += sufix;
+        out(instr);
 
         return null;
     }
