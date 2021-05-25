@@ -86,6 +86,12 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class StructType { List<StructField> fields; }
+	public Object visit(StructType node, Object param) {
+		visitChildren(node.getFields(), param);
+		return null;
+	}
+
 	//	class ErrorType {  }
 	public Object visit(ErrorType node, Object param) {
 		return null;

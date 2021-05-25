@@ -253,10 +253,18 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class StructType { List<StructField> fields; }
+	public Object visit(StructType node, Object param) {
+		visitChildren(node.getFields(), param);
+		return null;
+	}
+
 	// Método auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
-		if (children != null)
-			for (AST child : children)
+		if (children != null){
+			for (AST child : children){
 				child.accept(this, param);
+			}
+		}
 	}
 }

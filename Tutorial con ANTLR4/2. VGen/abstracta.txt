@@ -15,6 +15,7 @@ charType:type -> ;
 varType:type -> type:string;
 voidType:type -> ;
 arrayType:type -> size:intConstant type;
+structType:type -> fields:structField*;
 errorType:type -> ;
 
 print:sentence -> expression;

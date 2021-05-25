@@ -18,6 +18,7 @@ public interface Visitor {
 	public Object visit(VarType node, Object param);
 	public Object visit(VoidType node, Object param);
 	public Object visit(ArrayType node, Object param);
+	public Object visit(StructType node, Object param);
 	public Object visit(ErrorType node, Object param);
 	public Object visit(Print node, Object param);
 	public Object visit(Printsp node, Object param);

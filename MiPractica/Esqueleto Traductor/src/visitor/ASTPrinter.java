@@ -499,6 +499,16 @@ public class ASTPrinter extends DefaultVisitor {
 			write(indent, valueTag(null) + "  " + attName + ':' + typeTag(type));
 	}
 
+	//	class StructType { List<StructField> fields; }
+	public Object visit(StructType node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "StructType", node, false);
+
+		visit(indent + 1, "fields", "List<StructField>",node.getFields());
+		return null;
+	}
+
 	// -----------------------------------------------------------------
 	// Métodos auxiliares privados -------------------------------------
 
