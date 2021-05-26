@@ -1,24 +1,55 @@
 #source "source.txt"
 call main
 halt
-right:
-#FUNC right
-#RET void
-enter 6
-#LOCAL a:int
+doble:
+#FUNC doble
+#RET int
+#PARAM n:int
+#LOCAL resultado:int
+enter 2
+
+#line 3
 pusha BP
 push -2
 add
-push 1
+pusha BP
+push 4
+add
+loadi
+push 2
+mul
 storei
+
+#line 4
+pusha BP
+push -2
+add
+loadi
+ret 2,2,2
+right:
+#FUNC right
+#RET void
+#LOCAL a:int
 #LOCAL b:float
+#LOCAL c:char
+enter 7
+pusha BP
+push -2
+add
+pushi 1
+storei
 pusha BP
 push -6
 add
 pushf 2.1
 storef
+pusha BP
+push -7
+add
+pushb 97
+storeb
 
-#line 5
+#line 17
 pusha BP
 push -2
 add
@@ -27,7 +58,7 @@ outi
 pushb 10
 outb
 
-#line 6
+#line 18
 pusha BP
 push -6
 add
@@ -35,12 +66,38 @@ loadf
 outf
 pushb 10
 outb
-ret 0,6,0
+
+#line 19
+pusha BP
+push -7
+add
+loadb
+outb
+pushb 10
+outb
+ret 0,7,0
 main:
 #FUNC main
 #RET void
-enter 0
+#LOCAL i:int
+enter 2
 
-#line 10
+#line 24
+pusha BP
+push -2
+add
+push 9
+storei
+
+#line 25
+pusha BP
+push -2
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 27
 call right
-ret 0,0,0
+ret 0,2,0

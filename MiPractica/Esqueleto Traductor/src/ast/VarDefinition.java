@@ -67,7 +67,9 @@ public class VarDefinition extends AbstractDefinition {
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(name, type);
-	   setType(value);
+	   //El cast a int se hace para en generacion de codigo se haga pushb 97 (97 es el codigo de la 'a')
+	   //en lugar de pushb a (pushb a da error)
+	   setType((int)value);
 	}
 
 	public String getName() {

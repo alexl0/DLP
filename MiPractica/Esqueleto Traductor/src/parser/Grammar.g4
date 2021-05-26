@@ -76,9 +76,6 @@ defVarLocal returns[Definition ast]
 
 defVar returns[Definition ast]
 	: 'var' IDENT ':' type ';' 			{$ast=new VarDefinition($IDENT, $type.ast, 		VarScope.GLOBAL);}
-	| IDENT ':' 'var' '=' LITENT ';' 	{$ast=new VarDefinition($IDENT, new IntType(), 	VarScope.GLOBAL,  LexerHelper.lexemeToInt($LITENT.text));}
-	| IDENT ':' 'var' '=' LITREAL ';' 	{$ast=new VarDefinition($IDENT, new RealType(), VarScope.GLOBAL,  LexerHelper.lexemeToReal($LITREAL.text));}
-	| IDENT ':' 'var' '=' LITCHAR ';' 	{$ast=new VarDefinition($IDENT, new CharType(), VarScope.GLOBAL,  LexerHelper.lexemeToChar($LITCHAR.text));}
 	;
 
 defStruct returns[StructDefinition ast]

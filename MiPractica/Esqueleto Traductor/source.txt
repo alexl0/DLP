@@ -1,15 +1,28 @@
+doble(n:int):int{
+    var resultado:int;
+    resultado=n*2;
+    return resultado;
+}
+//f(a:float, b:float):float{
+//    var temp:float;
+//    temp = <float>(doble(<int>(a)));
+//    z:var = temp;
+//    return z-b;
+//}
 
 right(){
     a:var = 1;
     b:var = 2.1;
+    c:var = 'a';
     println a;
     println b;
+    println c;
 }
 
 main(){
-    right();
+    var i:int;
+    i=9;
+    println i;
 
-    var c:int;
-    c = 1;
-    print c;
+    right();
 }

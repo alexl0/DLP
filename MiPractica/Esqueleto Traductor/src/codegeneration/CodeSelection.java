@@ -66,25 +66,23 @@ public class CodeSelection extends DefaultVisitor {
     public Object visit(VarDefinition node, Object param) {
         out("#" + node.getScope().toString() + " " + node.getName() + ":" + node.getType().getMAPLName());
 
-        if(node.getValue()!=null){
-            //Direccion
-            if (node.getScope().equals(VarScope.GLOBAL)){
+        /*if (node.getValue() != null) {
+            // Direccion
+            if (node.getScope().equals(VarScope.GLOBAL)) {
                 out("pusha " + node.getAddress());
+                // Valor
+                if (node.getValue() instanceof Character) {
+                    out("pushb " + (Character) node.getValue());
+                    out("storeb");
+                } else if (node.getValue() instanceof Integer) {
+                    out("push " + (Integer) node.getValue());
+                    out("store");
+                } else if (node.getValue() instanceof Double) {
+                    out("pushf " + (Double) node.getValue());
+                    out("storef");
+                }
             }
-            else {
-                out("pusha BP");
-                out("push" + " " + node.getAddress());
-                out("add");
-            }
-            // Valor
-            if (node.getValue() instanceof Character)
-                out("push " + (Character) node.getValue());
-            else if (node.getValue() instanceof Integer)
-                out("push " + (Integer) node.getValue());
-            else if (node.getValue() instanceof Double)
-                out("pushf " + (Double) node.getValue());
-            out("store" + node.getType().getSuffix());
-        }
+        }*/
 
         return null;
     }
@@ -105,11 +103,7 @@ public class CodeSelection extends DefaultVisitor {
         out("#RET" + " " + node.getReturn_t().getMAPLName());
         visitChildren(node.getParams(), CodeFunction.ADDRESS);
         node.getReturn_t().accept(this, CodeFunction.VALUE);
-        //visitChildren(node.getDefinitions(), CodeFunction.ADDRESS);
-        for (VarDefinition def: node.getDefinitions()) {
-            if(def.getScope().equals(VarScope.GLOBAL))
-                def.accept(this, CodeFunction.ADDRESS);
-        }
+        visitChildren(node.getDefinitions(), CodeFunction.ADDRESS);
 
         int localesSize = 0;
         for (VarDefinition varDef : node.getDefinitions()){
@@ -118,10 +112,18 @@ public class CodeSelection extends DefaultVisitor {
 
         out("enter " + localesSize);
 
-        for (VarDefinition def: node.getDefinitions()) {
-            if(def.getScope().equals(VarScope.LOCAL))
-                def.accept(this, CodeFunction.ADDRESS);
-        }
+        if (node.getDefinitions() != null)
+            for (VarDefinition def : node.getDefinitions()) {
+                if (def.getScope().equals(VarScope.LOCAL) && def.getValue()!=null) {
+                    //Direccion
+                    out("pusha BP");
+                    out("push" + " " + def.getAddress());
+                    out("add");
+                    // Valor
+                    out("push" + def.getType().getSuffix() + " " + def.getValue());
+                    out("store" + def.getType().getSuffix());
+                }
+            }
 
         visitChildren(node.getSentences(), param);
 
