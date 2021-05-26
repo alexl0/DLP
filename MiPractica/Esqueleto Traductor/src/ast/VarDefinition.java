@@ -15,6 +15,7 @@ public class VarDefinition extends AbstractDefinition {
     public enum VarScope {
         GLOBAL, LOCAL, PARAM
     };
+    private Object value;
 
 	public VarDefinition(String name, Type type, VarScope scope) {
 		this.name = name;
@@ -34,6 +35,39 @@ public class VarDefinition extends AbstractDefinition {
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(name, type);
+	}
+
+	public VarDefinition(Object name, Object type, VarScope scope, int value) {
+		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.type = (Type) getAST(type);
+		this.scope = scope;
+
+       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+       // Obtiene la linea/columna a partir de las de los hijos.
+       setPositions(name, type);
+	   setType(value);
+	}
+
+	public VarDefinition(Object name, Object type, VarScope scope, double value) {
+		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.type = (Type) getAST(type);
+		this.scope = scope;
+
+       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+       // Obtiene la linea/columna a partir de las de los hijos.
+       setPositions(name, type);
+	   setType(value);
+	}
+
+	public VarDefinition(Object name, Object type, VarScope scope, char value) {
+		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.type = (Type) getAST(type);
+		this.scope = scope;
+
+       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+       // Obtiene la linea/columna a partir de las de los hijos.
+       setPositions(name, type);
+	   setType(value);
 	}
 
 	public String getName() {
@@ -68,6 +102,15 @@ public class VarDefinition extends AbstractDefinition {
     private VarScope scope;
 
 	public String toString() {
-        return "{name:" + getName() + ", type:" + getType() + ", scope:" + getScope() + "}";
-   }
+		return "{name:" + getName() + ", type:" + getType() + ", scope:" + getScope() + "}";
+	}
+
+	private void setType(Object value) {
+		this.value = value;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
 }

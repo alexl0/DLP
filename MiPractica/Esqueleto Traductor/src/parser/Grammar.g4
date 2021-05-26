@@ -65,10 +65,20 @@ expr returns[Expression ast]
 
 defVars returns[List<Definition> list = new ArrayList<Definition>();]
 	: ('var' IDENT ':' type ';' { $list.add(new VarDefinition($IDENT,$type.ast,VarScope.LOCAL)); })*
+	| (defVarLocal {$list.add($defVarLocal.ast); })*
+	;
+
+defVarLocal returns[Definition ast]
+	: IDENT ':' 'var' '=' LITENT  ';' 	{$ast=new VarDefinition($IDENT, new IntType(), 	VarScope.LOCAL,  LexerHelper.lexemeToInt($LITENT.text));}
+	| IDENT ':' 'var' '=' LITREAL ';' 	{$ast=new VarDefinition($IDENT, new RealType(), VarScope.LOCAL,  LexerHelper.lexemeToReal($LITREAL.text));}
+	| IDENT ':' 'var' '=' LITCHAR ';' 	{$ast=new VarDefinition($IDENT, new CharType(), VarScope.LOCAL,  LexerHelper.lexemeToChar($LITCHAR.text));}
 	;
 
 defVar returns[Definition ast]
-	: 'var' IDENT ':' type ';' {$ast=new VarDefinition($IDENT, $type.ast, VarScope.GLOBAL);}
+	: 'var' IDENT ':' type ';' 			{$ast=new VarDefinition($IDENT, $type.ast, 		VarScope.GLOBAL);}
+	| IDENT ':' 'var' '=' LITENT ';' 	{$ast=new VarDefinition($IDENT, new IntType(), 	VarScope.GLOBAL,  LexerHelper.lexemeToInt($LITENT.text));}
+	| IDENT ':' 'var' '=' LITREAL ';' 	{$ast=new VarDefinition($IDENT, new RealType(), VarScope.GLOBAL,  LexerHelper.lexemeToReal($LITREAL.text));}
+	| IDENT ':' 'var' '=' LITCHAR ';' 	{$ast=new VarDefinition($IDENT, new CharType(), VarScope.GLOBAL,  LexerHelper.lexemeToChar($LITCHAR.text));}
 	;
 
 defStruct returns[StructDefinition ast]
