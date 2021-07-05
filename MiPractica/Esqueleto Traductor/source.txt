@@ -14,15 +14,15 @@ right(){
     a:var = 1;
     b:var = 2.1;
     c:var = 'a';
-    println a;  //1
-    println b;  //2.1
-    println c;  //a
+    println a;
+    println b;
+    println c;
 }
 
 main(){
     var i:int;
-    i=doble(9);
-    println i;  // 18
+    i=9;
+    println i;
 
     right();
 }

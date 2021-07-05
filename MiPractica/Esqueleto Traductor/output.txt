@@ -87,7 +87,6 @@ pusha BP
 push -2
 add
 push 9
-call doble
 storei
 
 #line 25
