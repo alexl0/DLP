@@ -1,0 +1,7 @@
+En la línea 71 de Grammar.g4 se añaden las líneas necesarias para que admita definiciones de tipo: a:var = 2; a:var = 2.0; y a:var = 'a'
+	cada una de esas líneas llama su propio constructor de VarDefinition
+
+En VarDefinition.java se añaden los constructores mencionados anteriormente
+
+En CodeSelection.java, en el método public Object visit(FunDefinition node, Object param)
+	después del "enter" (se hace después para que el "enter" no sobrescriba las variables locales
