@@ -42,4 +42,5 @@ public interface Visitor {
 	public Object visit(FieldAccessExpression node, Object param);
 	public Object visit(IndexExpression node, Object param);
 	public Object visit(StructType node, Object param);
+	public Object visit(RegAsig node, Object param);
 }

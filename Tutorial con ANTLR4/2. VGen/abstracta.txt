@@ -31,6 +31,7 @@ return:sentence -> expression;
 ifElse:sentence -> expression if_s:sentence* else_s:sentence*;
 while:sentence -> expression sentence*;
 funcInvocation:sentence -> name:string params:expression*;
+RegAsig:sentence -> left:expression right:expression;
 
 
 variable:expression -> name:string;

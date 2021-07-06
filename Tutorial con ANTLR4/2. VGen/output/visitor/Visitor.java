@@ -29,6 +29,7 @@ public interface Visitor {
 	public Object visit(IfElse node, Object param);
 	public Object visit(While node, Object param);
 	public Object visit(FuncInvocation node, Object param);
+	public Object visit(RegAsig node, Object param);
 	public Object visit(Variable node, Object param);
 	public Object visit(IntConstant node, Object param);
 	public Object visit(RealConstant node, Object param);

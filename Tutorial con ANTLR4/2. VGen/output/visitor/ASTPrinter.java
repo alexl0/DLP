@@ -320,6 +320,17 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	//	class RegAsig { Expression left;  Expression right; }
+	public Object visit(RegAsig node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "RegAsig", node, false);
+
+		visit(indent + 1, "left", "Expression",node.getLeft());
+		visit(indent + 1, "right", "Expression",node.getRight());
+		return null;
+	}
+
 	//	class Variable { String name; }
 	public Object visit(Variable node, Object param) {
 		int indent = ((Integer)param).intValue();

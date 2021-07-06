@@ -1,6 +1,12 @@
 /**
+ * Examen 6 Julio 2021 DLP Pregunta 2
+ * Se ha modificado el fichero MiPractica/Esqueleto Traductor/abstracta.txt:
+ * En la línea 391 se ha añadido un visitor para RegAsig y se han realizado las comprobaciones pertinentes.
+ */
+
+/**
  * Tutorial de Diseño de Lenguajes de Programación
- * @author Raúl Izquierdo
+ * @author Alejandro Leon Pereira UO258774
  */
 
 package semantic;
@@ -387,6 +393,33 @@ public class TypeChecking extends DefaultVisitor {
 
         return null;
     }
+
+        // class RegAsig { Expression left; Expression right; }
+        public Object visit(RegAsig node, Object param) {
+            super.visit(node, param);
+
+            // << no es válido para tipos simples
+            predicado(!isSimpleType(node.getLeft().getType()),
+                    "The expression " + node.getLeft() + " must not be of simple type", node);
+            predicado(!isSimpleType(node.getRight().getType()),
+                    "The expression " + node.getRight() + " must not be of simple type", node);
+    
+            // << no es válido para arrays
+            predicado(!node.getLeft().getType().getClass().equals(ArrayType.class),
+                "The expression " + node.getLeft() + " must not be of type array", node);
+            predicado(!node.getRight().getType().getClass().equals(ArrayType.class),
+                "The expression " + node.getRight() + " must not be of type array", node);
+
+            // tanto "left" como "right" deben ser de tipo struct
+            predicado(node.getLeft().getType().getClass().equals(VarType.class), "The expression " + node.getLeft() + " must be of type struct",node);
+            predicado(node.getRight().getType().getClass().equals(VarType.class), "The expression " + node.getRight() + " must be of type struct",node);
+
+            // todos y cada uno de los campos tanto de "left" como de "right" deben ser de tipo simple
+            //
+
+            
+            return null;
+        }
 
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se

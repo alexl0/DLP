@@ -1,0 +1,41 @@
+struct Pareja { 
+  entero:int;
+  caracter:char;
+};
+
+struct reg1 { a:char; b:int; c:float; };
+struct reg2aux { c:float; a:char; b:int; };
+var reg2:[5]reg2aux;
+struct reg3 { b:int; };
+struct reg4 { a:char[10]; b:int; struct c { a:int; };};
+
+struct reg5 {
+	a:int;
+	struct b { x:float; y:char; z:char };
+	b:float;
+};
+
+struct reg6 {
+	struct b { y:char; };
+};
+
+init(){
+	reg2[0].a='a'; reg2[0].b=1; reg2[0].c=2.2;
+	reg3.b=3;
+	reg6.b.y='b';
+}
+
+//Las variables globales y la función init son iguales que en correcto.txt
+void main(){
+	struct reg7 { c:int; d:float; } reg7;
+	
+	init();
+
+	reg2 << reg2;			//Error porque << no es valido para arrays
+	reg1.a << reg2[0].a;	//Error porque << no es valido para tipos simples
+	reg3 << reg1;			//Error porque hay campos de reg1 que no se pueden salvar en reg3 
+	reg3 << reg4			//Error porque hay campos de reg4 que no se pueden salvar en reg3
+	reg5 << reg6			//Error porque el campo b no es de tipo simple 
+	reg6 << reg5			//Error porque hay campos en reg5 que no se pueden salvar en reg6 
+	reg7 << reg3			//Error porque reg3.b y reg7.b no tienen tipos equivalentes
+}

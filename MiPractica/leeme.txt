@@ -1,0 +1,12 @@
+Alejandro León Pereira UO258774 71898603M
+Los test "correcto.txt" y "incorrecto.txt" se encuentran en MiPractica/Esqueleto Traductor/ExamenJulio
+
+Para cada ejercicio, se han modificado los siguientes ficheros:
+Pregunta 1:
+	MiPractica/Esqueleto Traductor/abstracta.txt	(línea 34: modificar gramática abstracta)
+	MiPractica/Esqueleto Traductor/src/ast/AST.java (anotar los cambios hechos en la gramática abstracta, ya que en abstracta.txt no se permite añadir comentarios)
+	Demás ficheros modificados a partir de la gramática abstracta por VGen
+Pregunta 2:
+	MiPractica/Esqueleto Traductor/src/semantic/TypeChecking.java (línea 391: añadir visitor para RegAsig y realizar comprobaciones mediante predicados)
+Pregunta 3:
+Pregunta 4:

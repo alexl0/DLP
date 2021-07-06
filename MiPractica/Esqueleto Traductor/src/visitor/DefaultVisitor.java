@@ -259,6 +259,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class RegAsig { Expression left;  Expression right; }
+	public Object visit(RegAsig node, Object param) {
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
 	// Método auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null){

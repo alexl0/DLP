@@ -164,6 +164,15 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class RegAsig { Expression left;  Expression right; }
+	public Object visit(RegAsig node, Object param) {
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
 	//	class Variable { String name; }
 	public Object visit(Variable node, Object param) {
 		return null;
