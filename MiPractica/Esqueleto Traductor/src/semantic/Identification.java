@@ -244,19 +244,6 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
-	/**
-	* Se comprueba que las variables se definen una sola vez y que todas las varibles están definidas
-	* pero en ese caso no hay que hacer nada aqui
-	* 
-	* primero la intenta meter en el context map para ver que no esté metida ya
-	* cada vez que ve una variable busca que ya esté definida en el context map
-	* como ahora no estamos definiendo ni usando variables ahora no hace nada
-	*/
-	//	class PlusplusExpression { Expression expr; }
-	//public Object visit(PlusplusExpression node, Object param) {
-
-	//}
-
 	// # --------------------------------------------------------
 	// Métodos auxiliares recomendados (opcionales) -------------
 	@SuppressWarnings("unused")

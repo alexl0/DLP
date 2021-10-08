@@ -268,13 +268,6 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class PlusplusExpression { Expression expr; }
-	public Object visit(PlusplusExpression node, Object param) {
-		if (node.getExpr() != null)
-			node.getExpr().accept(this, param);
-		return null;
-	}
-
 	// Método auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null){

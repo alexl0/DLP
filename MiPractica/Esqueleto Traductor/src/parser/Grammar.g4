@@ -53,7 +53,6 @@ expr returns[Expression ast]
 	| IDENT '(' exprs ')'					{ $ast = new FuncInvocationExpression($IDENT,$exprs.list); }
 	| e=expr '.' IDENT						{ $ast = new FieldAccessExpression($e.ast,$IDENT); }
 	| e1=expr '[' e2=expr ']'				{ $ast = new IndexExpression($e1.ast,$e2.ast); }
-	| '++' expr								{ $ast = new PlusplusExpression($expr.ast); }
 	| l = expr op = ('*' | '/') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| l = expr op = ('+' | '-') r = expr	{ $ast = new ArithmeticExpression($l.ast,$op,$r.ast); }
 	| '(' expr ')'							{ $ast = $expr.ast; }

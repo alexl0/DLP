@@ -381,19 +381,6 @@ public class CodeSelection extends DefaultVisitor {
         return null;
     }
 
-	//	class PlusplusExpression { Expression expr; }
-	public Object visit(PlusplusExpression node, Object param) {
-
-        node.getExpr().accept(this, CodeFunction.ADDRESS);
-        node.getExpr().accept(this, CodeFunction.VALUE);
-        out("push 1");
-        out("add");
-        out("store");
-        node.getExpr().accept(this, CodeFunction.VALUE);
-
-		return null;
-	}
-
     // # ----------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------
 

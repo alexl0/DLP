@@ -459,16 +459,6 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class PlusplusExpression { Expression expr; }
-	public Object visit(PlusplusExpression node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "PlusplusExpression", node, false);
-
-		visit(indent + 1, "expr", "Expression",node.getExpr());
-		return null;
-	}
-
 	// -----------------------------------------------------------------
 	// Métodos invocados desde los métodos visit -----------------------
 
