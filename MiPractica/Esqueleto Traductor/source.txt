@@ -1,43 +1,13 @@
-struct Reg1 { a:char; b:int; c:float; };
-var reg1:Reg1;
-struct Reg2aux { c:float; a:char; b:int; };
-var reg2:[5]Reg2aux;
-struct Reg3 { b:int; };
-var reg3:Reg3;
-//struct Reg4 { a:[10]char; b:int; struct c { a:int; };};
-//var reg4:Reg4;
+//++ PREFIJO Y POSTFIJO (Junio 2016)
 
-//struct Reg5 {
-//	a:int;
-//	struct b { x:float; y:char; z:char };
-//	b:float;
-//};
-//var reg5:Reg5;
-
-//struct Reg6 {
-//	struct b { y:char; };
-//};
-//var reg6:Reg6;
-
-init(){
-	reg2[0].a='a'; reg2[0].b=1; reg2[0].c=2.2;
-	reg3.b=3;
-//	reg6.b.y='b';
+main() {
+  var a: int;
+  var i: int;
+  i = 1;
+  a = ++i;
+  print a;
+  //a = i++;
 }
 
-main(){
-	init();
-//	reg1 << reg2[0];
-//	reg2[0] << reg1;
-//	println reg1.a, ' ', reg1.b, ' ', reg1.c; //Muestra: a 1 2.2
-
-//	reg1 << reg3;
-//	reg2[1] << reg3;
-//	println reg1.b, ' ', reg2[1].b; //Muestra: 3 3
-	
-//	reg4 << reg3;
-//	println reg4.b; //Muestra: 3
-	
-//	reg5.b << reg6.b;
-//	println reg5.b.y; //Muestra: b
-}
+//en este caso implica una diferencia en el sintactico. no es como en otras ampliaciones como la asignacion de structs.
+//por tanto hay que cambiar cosas en el sintactico, casi siempre hay que tocarlo pero puede haber casos en los que no 

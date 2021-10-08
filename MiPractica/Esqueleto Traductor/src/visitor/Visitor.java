@@ -43,4 +43,5 @@ public interface Visitor {
 	public Object visit(IndexExpression node, Object param);
 	public Object visit(StructType node, Object param);
 	public Object visit(RegAsig node, Object param);
+	public Object visit(PlusplusExpression node, Object param);
 }

@@ -421,6 +421,33 @@ public class TypeChecking extends DefaultVisitor {
             return null;
         }
 
+	//	class PlusplusExpression { Expression expr; }
+	public Object visit(PlusplusExpression node, Object param) {
+
+        /**
+         * Semantico hace comprobacion de predicados pero TAMBIÉN
+         * tienen que calcular las reglas semánticas
+         */
+
+		super.visit(node, param);
+
+		//if (node.getExpr() != null)
+			//node.getExpr().accept(this, param);
+
+        //Comprobar tipo
+        predicado(node.getExpr().getType().getClass().equals(IntType.class),
+                "The operands must be of type integer ", node);
+
+        //Comprobar que es un lvalue porque vamos a modificarlo
+        predicado(node.getExpr().isModificable(), "the expression must be modificable ", node);
+
+        //Establecer reglas semánticas
+        node.setType(new IntType());
+        node.setModificable(false);
+
+		return null;
+	}
+
     /**
      * predicado. Método auxiliar para implementar los predicados. Borrar si no se
      * quiere usar.
