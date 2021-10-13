@@ -56,36 +56,16 @@ public class CodeSelection extends DefaultVisitor {
     // # ----------------------------------------------------------
     public Object visit(Program node, Object param) {
         out("#source \"" + sourceFile + "\"");
-        for (Definition def: node.getDefinitions())
-            if (def instanceof VarDefinition) def.accept(this, param);
         out("call" + " " + "main");
         out("halt");
-        for (Definition def: node.getDefinitions())
-            if (!(def instanceof VarDefinition)) def.accept(this, param);
+        visitChildren(node.getDefinitions(), param);
 
         return null;
     }
 
     public Object visit(VarDefinition node, Object param) {
         out("#" + node.getScope().toString() + " " + node.getName() + ":" + node.getType().getMAPLName());
-        if (node.getExpression() != null) {
-            
-            //Direccion de la variable
-            if (node.getScope().equals(VarScope.GLOBAL)){
-                out("pusha " + node.getAddress());
-            }
-            else {
-                out("pusha BP");
-                out("push" + " " + node.getAddress());
-                out("add");
-            }
 
-            //Valor de la expresion
-            node.getExpression().accept(this, CodeFunction.VALUE);
-
-            //Se guarda el valor de la expresion en la direcion de la variable
-            out("store", node.getExpression().getType());
-        }
         return null;
     }
 

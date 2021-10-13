@@ -40,12 +40,9 @@ public class TypeChecking extends DefaultVisitor {
     public Object visit(FunDefinition node, Object param) {
 
         super.visit(node, param);
-        for (VarDefinition def : node.getParams()){
-            if(def.getExpression()!=null)
-                def.setType(def.getExpression().getType());
+        for (VarDefinition def : node.getParams())
             predicado(isSimpleType(def.getType()),
                     "The type of the parameters" + ": " + node.getName() + " must be of simple type", node);
-        }
 
         if (!VoidType.class.equals(node.getReturn_t().getClass())) {
             predicado(isSimpleType(node.getReturn_t()),
@@ -72,9 +69,6 @@ public class TypeChecking extends DefaultVisitor {
 
     // class Variable { String name; }
     public Object visit(Variable node, Object param) {
-        if(node.getVarDefinition().getExpression()!=null)
-            node.getVarDefinition().setType(node.getVarDefinition().getExpression().getType());
-
         node.setType(node.getVarDefinition().getType());
         node.setModificable(true);
         return null;

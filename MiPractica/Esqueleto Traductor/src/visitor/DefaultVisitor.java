@@ -24,9 +24,6 @@ public class DefaultVisitor implements Visitor {
 	public Object visit(VarDefinition node, Object param) {
 		if (node.getType() != null)
 			node.getType().accept(this, param);
-
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
 		return null;
 	}
 

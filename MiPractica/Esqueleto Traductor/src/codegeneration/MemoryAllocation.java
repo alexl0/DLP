@@ -42,10 +42,6 @@ public class MemoryAllocation extends DefaultVisitor {
 
     public Object visit(VarDefinition node, Object param) {
         super.visit(node, param);
-
-        if(node.getExpression()!=null)
-            node.setType(node.getExpression().getType());
-        
         if (node.getScope().equals(VarScope.GLOBAL)) {
             node.setAddress(currentAddress);
             currentAddress = currentAddress + node.getType().getSize();
