@@ -36,6 +36,30 @@ public class VarDefinition extends AbstractDefinition {
        setPositions(name, type);
 	}
 
+
+	public VarDefinition(String name, Type type, VarScope scope, Expression expr) {
+		this.name = name;
+		this.type = type;//Va a estar a null
+		this.scope = scope;
+		this.expr = expr;
+
+       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+       // Obtiene la linea/columna a partir de las de los hijos.
+       setPositions(type);
+	}
+
+	public VarDefinition(Object name, Object type, VarScope scope, Object expr) {
+		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.type = (Type) getAST(type);//Va a estar a null
+		this.scope = scope;
+		this.expr = (Expression) expr;
+
+       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+       // Obtiene la linea/columna a partir de las de los hijos.
+       setPositions(name, type);
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -58,6 +82,14 @@ public class VarDefinition extends AbstractDefinition {
         this.scope = scope;
     }
 
+	
+	public Expression getExpression() {
+		return expr;
+	}
+	public void setExpression(Expression expr) {
+		this.expr = expr;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -66,6 +98,7 @@ public class VarDefinition extends AbstractDefinition {
 	private String name;
 	private Type type;
     private VarScope scope;
+	private Expression expr;
 
 	public String toString() {
         return "{name:" + getName() + ", type:" + getType() + ", scope:" + getScope() + "}";

@@ -1,72 +1,32 @@
 #source "source.txt"
+#GLOBAL b:float
+pusha 0
+pushf 2222.2
+storef
+#GLOBAL a:int
 call main
 halt
-#type Reg1 :{
-	a:char
-	b:int
-	c:float
-}
-#GLOBAL reg1:Reg1
-#type Reg2aux :{
-	c:float
-	a:char
-	b:int
-}
-#GLOBAL reg2:5*Reg2aux
-#type Reg3 :{
-	b:int
-}
-#GLOBAL reg3:Reg3
-init:
-#FUNC init
-#RET void
-enter 0
-
-#line 23
-pusha 7
-push 0
-push 7
-mul
-add
-push 4
-add
-pushb 97
-storeb
-
-#line 23
-pusha 7
-push 0
-push 7
-mul
-add
-push 5
-add
-push 1
-storei
-
-#line 23
-pusha 7
-push 0
-push 7
-mul
-add
-push 0
-add
-pushf 2.2
-storef
-
-#line 24
-pusha 42
-push 0
-add
-push 3
-storei
-ret 0,0,0
 main:
 #FUNC main
 #RET void
 enter 0
 
-#line 29
-call init
+#line 6
+pusha 4
+push 1111
+storei
+
+#line 8
+pusha 4
+loadi
+outi
+pushb 32
+outb
+
+#line 9
+pusha 0
+loadf
+outf
+pushb 32
+outb
 ret 0,0,0

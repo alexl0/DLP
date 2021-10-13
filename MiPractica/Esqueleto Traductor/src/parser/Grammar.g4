@@ -65,10 +65,12 @@ expr returns[Expression ast]
 
 defVars returns[List<Definition> list = new ArrayList<Definition>();]
 	: ('var' IDENT ':' type ';' { $list.add(new VarDefinition($IDENT,$type.ast,VarScope.LOCAL)); })*
+	| ('let' IDENT '=' expr ';' { $list.add(new VarDefinition($IDENT, null,VarScope.LOCAL, $expr.ast)); })*
 	;
 
 defVar returns[Definition ast]
 	: 'var' IDENT ':' type ';' {$ast=new VarDefinition($IDENT, $type.ast, VarScope.GLOBAL);}
+	| 'let' IDENT '=' expr ';' {$ast=new VarDefinition($IDENT, null, VarScope.GLOBAL, $expr.ast);}
 	;
 
 defStruct returns[StructDefinition ast]
