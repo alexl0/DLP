@@ -519,18 +519,6 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-
-	//	class AssignmentExpr { Expression left;  Expression right; }
-	public Object visit(AssignmentExpr node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "AssignmentExpr", node, false);
-
-		visit(indent + 1, "left", "Expression",node.getLeft());
-		visit(indent + 1, "right", "Expression",node.getRight());
-		return null;
-	}
-
 	// -----------------------------------------------------------------
 	// Métodos auxiliares privados -------------------------------------
 

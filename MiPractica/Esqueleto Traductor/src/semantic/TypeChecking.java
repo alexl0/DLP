@@ -1,13 +1,7 @@
 /**
- * Examen 14 Octubre 2021 DLP Pregunta 2
- * En la línea 297 se ha añadido un visitor para AssignmentExpr y se han realizado las comprobaciones pertinentes:
- * - lo primero, como es una expresión se le asigna un tipo. El tipo (lo que devuelva) será el tipo de la expresión de la derecha.
- *  (tiene que devolver el valor de la expresión de la derecha)
- * - las dos expresiones que se vayan a asignar deben ser del mismo tipo.
- * - comprobamos que la parte de la izquierda es un lvalue porque vamos a modificarlo, tiene que ser modificable
- * - la parte de la izquierda debe ser de tipo simple.
- * 
- * Para que assigmentExpr sea una expresión, deberá devolver un valor, el valor del elemento de la derecha.
+ * Examen 6 Julio 2021 DLP Pregunta 2
+ * Se ha modificado el fichero MiPractica/Esqueleto Traductor/abstracta.txt:
+ * En la línea 391 se ha añadido un visitor para RegAsig y se han realizado las comprobaciones pertinentes.
  */
 
 /**
@@ -298,31 +292,6 @@ public class TypeChecking extends DefaultVisitor {
         }
         return null;
     }
-
-        // class Assignment { Expression left; Expression right; }
-        public Object visit(AssignmentExpr node, Object param) {
-            super.visit(node, param);
-    
-            //En este caso será el tipo de la AssignmentExpr será el de la expresión de la derecha
-            node.setType(node.getRight().getType());
-            //node.setModificable(true);
-
-
-            //Se comprueba que la parte de la izquierda es simple
-            predicado(isSimpleType(node.getLeft().getType()),
-                    "The expression " + node.getLeft() + " must be of simple type", node);
-    
-            //Se comprueba que la parte de la izquierda es un l-value por que vamos a modificarlo
-            predicado(node.getLeft().isModificable(), "Cannot assign a value to " + node.getLeft(), node);
-    
-            //Comprobamos que son del mismo tipo
-            if (node.getLeft().isModificable() && isSimpleType(node.getLeft().getType())
-             ) {
-                predicado(node.getLeft().getType().getClass().equals(node.getRight().getType().getClass()),
-                        "Cannot assign the type " + node.getRight().getType() + " to " + node.getLeft().getType(), node);
-            }
-            return null;
-        }
 
     // class Return { Expression expression; }
     public Object visit(Return node, Object param) {

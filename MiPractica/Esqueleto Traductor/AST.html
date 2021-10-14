@@ -22,50 +22,100 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:1  14:10   </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">println a</span><span class="sourceText">;		// imprime 2</span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">1:8  29:5    </span><span class="sourceText">struct </span><span class="posText">Reg1 { a:char; b:int; c:float; };</span><span class="sourceText"> ... </span><span class="posText">init</span><span class="sourceText">();</span>
 <span class="dots">.  </span>definitions  <span class="type">List&lt;Definition&gt;</span> = 
-<span class="dots">.  .  </span>FunDefinition &rarr;                                       <span class="pos">1:1  14:10   </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">println a</span><span class="sourceText">;		// imprime 2</span>
+<span class="dots">.  .  </span>StructDefinition &rarr;                                    <span class="pos">1:8  1:36    </span><span class="sourceText">struct </span><span class="posText">Reg1 { a:char; b:int; c:float</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  </span>"Reg1"  <span class="type">VarType.type</span>                               <span class="pos">1:8  1:11    </span><span class="sourceText">struct </span><span class="posText">Reg1</span><span class="sourceText"> { a:char; b:int; c:float; };</span>
+<span class="dots">.  .  |  </span>definitions  <span class="type">List&lt;StructField&gt;</span> = 
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">1:15  1:20   </span><span class="sourceText">struct Reg1 { </span><span class="posText">a:char</span><span class="sourceText">; b:int; c:float; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">a</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">CharType</span> &rarr;                                   <span class="pos">1:17  1:20   </span><span class="sourceText">struct Reg1 { a:</span><span class="posText">char</span><span class="sourceText">; b:int; c:float; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">1:23  1:27   </span><span class="sourceText">struct Reg1 { a:char; </span><span class="posText">b:int</span><span class="sourceText">; c:float; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">1:25  1:27   </span><span class="sourceText">struct Reg1 { a:char; b:</span><span class="posText">int</span><span class="sourceText">; c:float; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">1</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">1:30  1:36   </span><span class="sourceText">struct Reg1 { a:char; b:int; </span><span class="posText">c:float</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">c</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">RealType</span> &rarr;                                   <span class="pos">1:32  1:36   </span><span class="sourceText">struct Reg1 { a:char; b:int; c:</span><span class="posText">float</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">3</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>VarDefinition &rarr;                                       <span class="pos">2:5  2:13    </span><span class="sourceText">var </span><span class="posText">reg1:Reg1</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">reg1</span>"  
+<span class="dots">.  .  |  </span>"Reg1"  <span class="type">VarType.type</span>                               <span class="pos">2:10  2:13   </span><span class="sourceText">var reg1:</span><span class="posText">Reg1</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>StructDefinition &rarr;                                    <span class="pos">3:8  3:39    </span><span class="sourceText">struct </span><span class="posText">Reg2aux { c:float; a:char; b:int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  </span>"Reg2aux"  <span class="type">VarType.type</span>                            <span class="pos">3:8  3:14    </span><span class="sourceText">struct </span><span class="posText">Reg2aux</span><span class="sourceText"> { c:float; a:char; b:int; };</span>
+<span class="dots">.  .  |  </span>definitions  <span class="type">List&lt;StructField&gt;</span> = 
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">3:18  3:24   </span><span class="sourceText">struct Reg2aux { </span><span class="posText">c:float</span><span class="sourceText">; a:char; b:int; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">c</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">RealType</span> &rarr;                                   <span class="pos">3:20  3:24   </span><span class="sourceText">struct Reg2aux { c:</span><span class="posText">float</span><span class="sourceText">; a:char; b:int; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">3:27  3:32   </span><span class="sourceText">struct Reg2aux { c:float; </span><span class="posText">a:char</span><span class="sourceText">; b:int; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">a</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">CharType</span> &rarr;                                   <span class="pos">3:29  3:32   </span><span class="sourceText">struct Reg2aux { c:float; a:</span><span class="posText">char</span><span class="sourceText">; b:int; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">3:35  3:39   </span><span class="sourceText">struct Reg2aux { c:float; a:char; </span><span class="posText">b:int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">3:37  3:39   </span><span class="sourceText">struct Reg2aux { c:float; a:char; b:</span><span class="posText">int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">5</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>VarDefinition &rarr;                                       <span class="pos">4:5  4:19    </span><span class="sourceText">var </span><span class="posText">reg2:[5]Reg2aux</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">reg2</span>"  
+<span class="dots">.  .  |  </span>ArrayType &rarr;                                        <span class="pos">4:11  4:19   </span><span class="sourceText">var reg2:[</span><span class="posText">5]Reg2aux</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>"5"  <span class="type">IntConstant.value</span>                          <span class="pos">4:11  4:11   </span><span class="sourceText">var reg2:[</span><span class="posText">5</span><span class="sourceText">]Reg2aux;</span>
+<span class="dots">.  .  |  .  </span>"Reg2aux"  <span class="type">VarType.type</span>                         <span class="pos">4:13  4:19   </span><span class="sourceText">var reg2:[5]</span><span class="posText">Reg2aux</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">7</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>StructDefinition &rarr;                                    <span class="pos">5:8  5:19    </span><span class="sourceText">struct </span><span class="posText">Reg3 { b:int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  </span>"Reg3"  <span class="type">VarType.type</span>                               <span class="pos">5:8  5:11    </span><span class="sourceText">struct </span><span class="posText">Reg3</span><span class="sourceText"> { b:int; };</span>
+<span class="dots">.  .  |  </span>definitions  <span class="type">List&lt;StructField&gt;</span> = 
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">5:15  5:19   </span><span class="sourceText">struct Reg3 { </span><span class="posText">b:int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">5:17  5:19   </span><span class="sourceText">struct Reg3 { b:</span><span class="posText">int</span><span class="sourceText">; };</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>VarDefinition &rarr;                                       <span class="pos">6:5  6:13    </span><span class="sourceText">var </span><span class="posText">reg3:Reg3</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">reg3</span>"  
+<span class="dots">.  .  |  </span>"Reg3"  <span class="type">VarType.type</span>                               <span class="pos">6:10  6:13   </span><span class="sourceText">var reg3:</span><span class="posText">Reg3</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">42</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>FunDefinition &rarr;                                       <span class="pos">22:1  24:9   </span><span class="sourceText"></span><span class="posText">init(){</span><span class="sourceText"> ... </span><span class="posText">reg3.b=3</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span>"<span class="value">init</span>"  
+<span class="dots">.  .  |  </span>params  <span class="type">List&lt;Definition&gt;</span> = 
+<span class="dots">.  .  |  </span><span class="value">VoidType</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span>definitions  <span class="type">List&lt;VarDefinition&gt;</span> = 
+<span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
+<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">23:2  23:14  </span><span class="sourceText"></span><span class="posText">reg2[0].a='a'</span><span class="sourceText">; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  </span>FieldAccessExpression &rarr;                      <span class="pos">23:2  23:10  </span><span class="sourceText"></span><span class="posText">reg2[0].a</span><span class="sourceText">='a'; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>IndexExpression &rarr;                         <span class="pos">23:2  23:7   </span><span class="sourceText"></span><span class="posText">reg2[0</span><span class="sourceText">].a='a'; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"reg2"  <span class="type">Variable.name</span>                  <span class="pos">23:2  23:5   </span><span class="sourceText"></span><span class="posText">reg2</span><span class="sourceText">[0].a='a'; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">IntConstant.value</span>                 <span class="pos">23:7  23:7   </span><span class="sourceText">reg2[</span><span class="posText">0</span><span class="sourceText">].a='a'; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">a</span>"  
+<span class="dots">.  .  |  .  |  </span>"'a'"  <span class="type">CharConstant.value</span>                    <span class="pos">23:12  23:14 </span><span class="sourceText">reg2[0].a=</span><span class="posText">'a'</span><span class="sourceText">; reg2[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">23:17  23:27 </span><span class="sourceText">reg2[0].a='a'; </span><span class="posText">reg2[0].b=1</span><span class="sourceText">; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  </span>FieldAccessExpression &rarr;                      <span class="pos">23:17  23:25 </span><span class="sourceText">reg2[0].a='a'; </span><span class="posText">reg2[0].b</span><span class="sourceText">=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>IndexExpression &rarr;                         <span class="pos">23:17  23:22 </span><span class="sourceText">reg2[0].a='a'; </span><span class="posText">reg2[0</span><span class="sourceText">].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"reg2"  <span class="type">Variable.name</span>                  <span class="pos">23:17  23:20 </span><span class="sourceText">reg2[0].a='a'; </span><span class="posText">reg2</span><span class="sourceText">[0].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">IntConstant.value</span>                 <span class="pos">23:22  23:22 </span><span class="sourceText">reg2[0].a='a'; reg2[</span><span class="posText">0</span><span class="sourceText">].b=1; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  .  |  </span>"1"  <span class="type">IntConstant.value</span>                       <span class="pos">23:27  23:27 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=</span><span class="posText">1</span><span class="sourceText">; reg2[0].c=2.2;</span>
+<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">23:30  23:42 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; </span><span class="posText">reg2[0].c=2.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>FieldAccessExpression &rarr;                      <span class="pos">23:30  23:38 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; </span><span class="posText">reg2[0].c</span><span class="sourceText">=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>IndexExpression &rarr;                         <span class="pos">23:30  23:35 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; </span><span class="posText">reg2[0</span><span class="sourceText">].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"reg2"  <span class="type">Variable.name</span>                  <span class="pos">23:30  23:33 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; </span><span class="posText">reg2</span><span class="sourceText">[0].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">IntConstant.value</span>                 <span class="pos">23:35  23:35 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; reg2[</span><span class="posText">0</span><span class="sourceText">].c=2.2;</span>
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">c</span>"  
+<span class="dots">.  .  |  .  |  </span>"2.2"  <span class="type">RealConstant.value</span>                    <span class="pos">23:40  23:42 </span><span class="sourceText">reg2[0].a='a'; reg2[0].b=1; reg2[0].c=</span><span class="posText">2.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">24:2  24:9   </span><span class="sourceText"></span><span class="posText">reg3.b=3</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>FieldAccessExpression &rarr;                      <span class="pos">24:2  24:7   </span><span class="sourceText"></span><span class="posText">reg3.b</span><span class="sourceText">=3;</span>
+<span class="dots">.  .  |  .  |  .  </span>"reg3"  <span class="type">Variable.name</span>                     <span class="pos">24:2  24:5   </span><span class="sourceText"></span><span class="posText">reg3</span><span class="sourceText">.b=3;</span>
+<span class="dots">.  .  |  .  |  .  </span>"<span class="value">b</span>"  
+<span class="dots">.  .  |  .  |  </span>"3"  <span class="type">IntConstant.value</span>                       <span class="pos">24:9  24:9   </span><span class="sourceText">reg3.b=</span><span class="posText">3</span><span class="sourceText">;</span>
+<span class="dots">.  .  </span>FunDefinition &rarr;                                       <span class="pos">28:1  29:5   </span><span class="sourceText"></span><span class="posText">main(){</span><span class="sourceText"> ... </span><span class="posText">init</span><span class="sourceText">();</span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>params  <span class="type">List&lt;Definition&gt;</span> = 
 <span class="dots">.  .  |  </span><span class="value">VoidType</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>definitions  <span class="type">List&lt;VarDefinition&gt;</span> = 
-<span class="dots">.  .  |  .  </span>VarDefinition &rarr;                                 <span class="pos">2:6  2:10    </span><span class="sourceText">var </span><span class="posText">a:int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">a</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">2:8  2:10    </span><span class="sourceText">var a:</span><span class="posText">int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span><span class="value">-2</span>  <span class="type">int</span>
-<span class="dots">.  .  |  .  </span>VarDefinition &rarr;                                 <span class="pos">3:6  3:10    </span><span class="sourceText">var </span><span class="posText">b:int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">b</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">3:8  3:10    </span><span class="sourceText">var b:</span><span class="posText">int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span><span class="value">-4</span>  <span class="type">int</span>
-<span class="dots">.  .  |  .  </span>VarDefinition &rarr;                                 <span class="pos">4:6  4:10    </span><span class="sourceText">var </span><span class="posText">c:int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">c</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">4:8  4:10    </span><span class="sourceText">var c:</span><span class="posText">int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span><span class="value">-6</span>  <span class="type">int</span>
-<span class="dots">.  .  |  .  </span>VarDefinition &rarr;                                 <span class="pos">5:8  5:12    </span><span class="sourceText">var </span><span class="posText">d:int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"<span class="value">d</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">IntType</span> &rarr;                                    <span class="pos">5:10  5:12   </span><span class="sourceText">var d:</span><span class="posText">int</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span><span class="value">-8</span>  <span class="type">int</span>
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
-<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">7:2  7:6     </span><span class="sourceText"></span><span class="posText">a = 1</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Variable.name</span>                           <span class="pos">7:2  7:2     </span><span class="sourceText"></span><span class="posText">a</span><span class="sourceText"> = 1;</span>
-<span class="dots">.  .  |  .  |  </span>"1"  <span class="type">IntConstant.value</span>                       <span class="pos">7:6  7:6     </span><span class="sourceText">a = </span><span class="posText">1</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">8:2  8:6     </span><span class="sourceText"></span><span class="posText">b = 2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">Variable.name</span>                           <span class="pos">8:2  8:2     </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2;</span>
-<span class="dots">.  .  |  .  |  </span>"2"  <span class="type">IntConstant.value</span>                       <span class="pos">8:6  8:6     </span><span class="sourceText">b = </span><span class="posText">2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">9:2  9:6     </span><span class="sourceText"></span><span class="posText">c = 3</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"c"  <span class="type">Variable.name</span>                           <span class="pos">9:2  9:2     </span><span class="sourceText"></span><span class="posText">c</span><span class="sourceText"> = 3;</span>
-<span class="dots">.  .  |  .  |  </span>"3"  <span class="type">IntConstant.value</span>                       <span class="pos">9:6  9:6     </span><span class="sourceText">c = </span><span class="posText">3</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Assignment &rarr;                                    <span class="pos">10:2  10:6   </span><span class="sourceText"></span><span class="posText">d = 4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"d"  <span class="type">Variable.name</span>                           <span class="pos">10:2  10:2   </span><span class="sourceText"></span><span class="posText">d</span><span class="sourceText"> = 4;</span>
-<span class="dots">.  .  |  .  |  </span>"4"  <span class="type">IntConstant.value</span>                       <span class="pos">10:6  10:6   </span><span class="sourceText">d = </span><span class="posText">4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>Println &rarr;                                       <span class="pos">12:10  12:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// imprime 1</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Variable.name</span>                           <span class="pos">12:10  12:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// imprime 1</span>
-<span class="dots">.  .  |  .  </span>Println &rarr;                                       <span class="pos">13:10  13:12 </span><span class="sourceText">println </span><span class="posText">a=2</span><span class="sourceText">;	// imprime 2</span>
-<span class="dots">.  .  |  .  |  </span>AssignmentExpr &rarr;                             <span class="pos">13:10  13:12 </span><span class="sourceText">println </span><span class="posText">a=2</span><span class="sourceText">;	// imprime 2</span>
-<span class="dots">.  .  |  .  |  .  </span>"a"  <span class="type">Variable.name</span>                        <span class="pos">13:10  13:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">=2;	// imprime 2</span>
-<span class="dots">.  .  |  .  |  .  </span>"2"  <span class="type">IntConstant.value</span>                    <span class="pos">13:12  13:12 </span><span class="sourceText">println a=</span><span class="posText">2</span><span class="sourceText">;	// imprime 2</span>
-<span class="dots">.  .  |  .  </span>Println &rarr;                                       <span class="pos">14:10  14:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// imprime 2</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">Variable.name</span>                           <span class="pos">14:10  14:10 </span><span class="sourceText">println </span><span class="posText">a</span><span class="sourceText">;		// imprime 2</span>
+<span class="dots">.  .  |  .  </span>FuncInvocation &rarr;                                <span class="pos">29:2  29:5   </span><span class="sourceText"></span><span class="posText">init</span><span class="sourceText">();</span>
+<span class="dots">.  .  |  .  |  </span>"<span class="value">init</span>"  
+<span class="dots">.  .  |  .  |  </span>params  <span class="type">List&lt;Expression&gt;</span> = 
 
 [ASTPrinter] --------------------------------
 </pre>

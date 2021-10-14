@@ -1,7 +1,3 @@
-/**
- * Se ha añadido en la línea 171 un visit para AssignmentExpr, donde se generará el código mapl
- */
-
 package codegeneration;
 
 import java.io.*;
@@ -163,16 +159,6 @@ public class CodeSelection extends DefaultVisitor {
     }
 
     public Object visit(Assignment node, Object param) {
-        line(node);
-
-        node.getLeft().accept(this, CodeFunction.ADDRESS);
-        node.getRight().accept(this, CodeFunction.VALUE);
-        out("store", node.getLeft().getType());
-
-        return null;
-    }
-
-    public Object visit(AssignmentExpr node, Object param) {
         line(node);
 
         node.getLeft().accept(this, CodeFunction.ADDRESS);

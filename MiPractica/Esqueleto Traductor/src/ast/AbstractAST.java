@@ -1,28 +1,5 @@
 /**
  * @generated VGen (for ANTLR) 1.7.2
- * 
- * Pregunta 1
- * Para llevar a cabo la modificación del lenguaje se ha modificado la gramática abstracta (Grammar.g4)
- * - En la línea 63 se ha añadido:
-	| <assoc=right> l = expr '=' r = expr					{$ast = new AssignmentExpr($l.ast, $r.ast);}
- * se ha añadido abajo del todo para que tenga menor precedencia, y se ha añadido <assoc=right> para que
- * tenga asociatividad a derechas
- * Es igual que la asignación sentencia pero sin el punto y  coma, y en lugar de crear un nodo Assignment
- * se crea un nodo AssignmentExpr.
- * Una vez modificado el fichero Grammar.g4, con el comando antlr se ha creado el nuevo fichero automáticamente:
- * - GrammarParser.java
- * La creación de un nodo AssignmentExpr en lugar de Assignment, se debe a que así podemos diferenciar entre
- * los dos tipos de asignación, ya que no se puede asignar una expresión a una sentencia, y además assigmentExpr
- * tendrá unas etapas de typechecking y generación de código distintas de assigment.
- * Para crear AssignmentExpr se ha añadido la línea 50 de la gramatica abstracta (abstracta.txt) 
-    assignmentExpr:expression -> left:expression right:expression;
-    Es igual que assignment pero en lugar se ser una sentencia, es una expresión
- * Después, se han modificado los siguientes ficheros:
- * - _PlantillaParaVisitors.txt, ASTPrinter.java, DefaultVisitor, Visitor.java (con las modificaciones del VGen)
- * Y los siguientes ficheros
- * - CodeSelection.java, Identification.java, TypeChecking.java
- * con diferentes modificaciones que se explicarán en posteriores ejercicios del examen.
- * 
  */
 
 package ast;
