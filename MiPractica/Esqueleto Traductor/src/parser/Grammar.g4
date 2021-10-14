@@ -60,6 +60,7 @@ expr returns[Expression ast]
 	| l=expr op=( '!=' | '==' | '>' | '<' | '>=' | '<=' ) r=expr	{ $ast = new ComparableExpression($l.ast,$op,$r.ast); }
 	| l=expr op=('&&' | '||') r=expr		{ $ast = new LogicalExpression($l.ast,$op,$r.ast); }
 	| op='!' expr							{ $ast = new UnaryExpression($op,$expr.ast); }
+	| <assoc=right> l = expr '=' r = expr					{$ast = new AssignmentExpr($l.ast, $r.ast);}
 	| '\'' IDENT '\''
 	;
 

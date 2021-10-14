@@ -183,6 +183,16 @@ public class Identification extends DefaultVisitor {
 		return null;
 	}
 
+	// class Assignment { Expression left; Expression right; }
+	public Object visit(AssignmentExpr node, Object param) {
+		super.visit(node, param);
+
+		//if (param instanceof FunDefinition)
+			//node.setFunDefinition((FunDefinition) param);
+
+		return null;
+	}
+
 	// class IfElse { Expression expression; List<Sentence> if_s; List<Sentence>
 	// else_s; }
 	public Object visit(IfElse node, Object param) {

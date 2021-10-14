@@ -47,3 +47,4 @@ comparableExpression:expression -> left:expression operator:string right:express
 castExpression:expression -> type:type expr:expression;
 fieldAccessExpression:expression -> expr:expression name:string;
 indexExpression:expression -> expr:expression index:expression;
+assignmentExpr:expression -> left:expression right:expression;
